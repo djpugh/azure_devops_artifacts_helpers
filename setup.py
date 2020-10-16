@@ -31,7 +31,7 @@ WHEELS_DIR = Path(__file__).parent.absolute()/'src'/'azure_devops_artifacts_help
 
 DOWNLOAD_INDEX_URL = os.environ.get('PIP_INDEX_URL', "https://pypi.org/simple")
 
-PLATFORMS = ['win32']  # , 'linux_x86_64', 'any']
+PLATFORMS = ['win32',  'manylinux1_x86_64']
 PYTHON_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9']
 
 # We are going to take the approach that the requirements.txt specifies
@@ -71,7 +71,7 @@ for py_version in PYTHON_VERSIONS:
 for platform in PLATFORMS:
     if platform == 'win32':
         classifiers.append("Operating System :: Microsoft :: Windows")
-    if platform == 'linux_x86_64':
+    if platform == 'manylinux1_x86_64':
         classifiers.append("Operating System :: POSIX")
 
 kwargs = {'install_requires': install_requires,
