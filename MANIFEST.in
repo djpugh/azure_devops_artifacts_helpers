@@ -1,0 +1,3 @@
+include requirements.txt
+include versioneer.py
+include src/azure_devops_artifacts_helpers/_version.py
