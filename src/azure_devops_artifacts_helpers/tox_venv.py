@@ -1,3 +1,4 @@
+"""Extension for tox to use on environment creation to install artifacts-keyring to virtualenv automatically."""
 import sys
 
 try:
@@ -12,6 +13,7 @@ if tox:
 
     @tox.hookimpl
     def tox_testenv_create(venv, action):
+        """Hook for creating tox testenv, monkeypatched from tox."""
         config_interpreter = venv.getsupportedinterpreter()
         args = [sys.executable, "-m", "virtualenv"]
         if venv.envconfig.sitepackages:
@@ -22,6 +24,7 @@ if tox:
             args.append("--no-download")
         # add interpreter explicitly, to prevent using default (virtualenv.ini)
         args.extend(["--python", str(config_interpreter)])
+        # Add seeder explicitly
         args.extend(["--seeder", 'azdo-app-data'])
 
         cleanup_for_venv(venv)
@@ -41,9 +44,10 @@ if tox:
             except KeyboardInterrupt:
                 venv.status = "keyboardinterrupt"
                 raise
-        return True  # Return non-None to indicate plugin has completed
+        # Return non-None to indicate plugin has completed
+        return True
 
 
 else:
     def tox_venv(venv, action):
-        pass
+        """Empty method if tox not installed."""
