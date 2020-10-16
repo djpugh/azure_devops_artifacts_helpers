@@ -33,7 +33,7 @@ ARTIFACTS_KEYRING_VERSION = "0.2.10"
 DOWNLOAD_INDEX_URL = os.environ.get('PIP_INDEX_URL', "https://pypi.org/simple")
 
 PLATFORMS = ['win32', 'linux_x86_64', 'any']
-PYTHON_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9']s
+PYTHON_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9']
 
 # We are going to take the approach that the requirements.txt specifies
 # exact (pinned versions) to use but install_requires should only
