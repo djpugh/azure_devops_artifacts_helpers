@@ -89,14 +89,16 @@ def populate_wheels(index_url=DOWNLOAD_INDEX_URL, python_versions=PYTHON_VERSION
         print(f'PLATFORM: {platform}')
         for py_version in python_versions:
             print(f'PYTHON VERSION: {py_version}')
-            subprocess.check_call([sys.executable, '-m', 'pip', 'download',
-                                '--only-binary=:all:',
-                                '--platform', platform,
-                                '--python-version', py_version,
-                                '--implementation', 'py',
-                                '-d', str(WHEELS_DIR),
-                                '--index-url', index_url,
-                                '-r', 'embed_requirements.txt'])
+            print(subprocess.check_output([sys.executable, '-m', 'pip', 'download',
+                                           '--only-binary=:all:',
+                                           '--platform', platform,
+                                           '--python-version', py_version,
+                                           '--implementation', 'py',
+                                           '-d', str(WHEELS_DIR),
+                                           '--index-url', index_url,
+                                           '-r', 'embed_requirements.txt']).decode())
+    print('Downloaded Packages')
+    print(os.listdir(str(WHEELS_DIR)))
 
 populate_wheels(index_url=DOWNLOAD_INDEX_URL,
                 python_versions=PYTHON_VERSIONS)
