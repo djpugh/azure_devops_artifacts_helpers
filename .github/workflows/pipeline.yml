@@ -23,7 +23,7 @@ jobs:
         run: tox -e lint
 
   test:
-    name: Test ${{ matrix.py }} - ${{ matrix.os }}
+    name: Test Python ${{ matrix.py }} - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: false
@@ -50,8 +50,8 @@ jobs:
         pip install tox
     - name: Setup Test Suite
       run: tox -e test -vv --notest
-    - name: Setup Test Suite
-      run: tox -e test -skip-pkg-install
+    - name: Run Test Suite
+      run: tox -e test --skip-pkg-install
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
@@ -62,7 +62,7 @@ jobs:
   scan:
     if: github.event_name == 'pull_request' && contains(github.ref, 'master')
 
-    name: Scan 
+    name: Scan Licenses
     runs-on: ubuntu-latest
 
     steps:
