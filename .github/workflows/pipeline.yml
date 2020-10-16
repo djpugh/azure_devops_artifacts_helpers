@@ -135,7 +135,7 @@ jobs:
       - name: Download build
         uses: actions/download-artifact@v2
         with:
-          name: build-${{ matrix.py }}
+          name: build
       - shell: bash
         run: |
           pip install /dist/$(ls -t /dist/*.whl | head -n1)
