@@ -37,12 +37,14 @@ To create a virtualenv with the ``artifacts-keyring`` package installed.
 This also includes an extension for ``tox``, which will activate automatically (may require configuring
 ``requires`` in the ``tox`` config)
 
-Coverage:
+Coverage
+~~~~~~~~
 
 .. image:: https://codecov.io/gh/djpugh/azure_devops_artifacts_helpers/branch/master/graphs/sunburst.svg?token=APZ8YDJ0UD
     :target: https://codecov.io/gh/djpugh/azure_devops_artifacts_helpers
 
-License Analysis:
+License Analysis
+~~~~~~~~~~~~~~~~
 
 .. image:: https://app.fossa.com/api/projects/custom%2B20832%2Fgithub.com%2Fdjpugh%2Fazure_devops_artifacts_helpers.svg?type=large
     :target: https://app.fossa.com/projects/custom%2B20832%2Fgithub.com%2Fdjpugh%2Fazure_devops_artifacts_helpers?ref=badge_shield
