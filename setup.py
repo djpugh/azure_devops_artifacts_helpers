@@ -29,7 +29,6 @@ except AttributeError:
 
 WHEELS_DIR = Path(__file__).parent.absolute()/'src'/'azure_devops_artifacts_helpers'/'wheels'
 
-ARTIFACTS_KEYRING_VERSION = "0.2.10"
 DOWNLOAD_INDEX_URL = os.environ.get('PIP_INDEX_URL', "https://pypi.org/simple")
 
 PLATFORMS = ['win32']  # , 'linux_x86_64', 'any']
@@ -85,7 +84,7 @@ if cmdclass is not None:
 
 
 
-def populate_wheels(artifacts_keyring_version=ARTIFACTS_KEYRING_VERSION, index_url=DOWNLOAD_INDEX_URL, python_versions=PYTHON_VERSIONS):
+def populate_wheels(index_url=DOWNLOAD_INDEX_URL, python_versions=PYTHON_VERSIONS):
     for platform in PLATFORMS:
         print(f'PLATFORM: {platform}')
         for py_version in python_versions:
@@ -97,10 +96,9 @@ def populate_wheels(artifacts_keyring_version=ARTIFACTS_KEYRING_VERSION, index_u
                                 '--implementation', 'py',
                                 '-d', str(WHEELS_DIR),
                                 '--index-url', index_url,
-                                f'artifacts-keyring=={artifacts_keyring_version}'])
+                                '-r', 'embed_requirements.txt'])
 
-populate_wheels(artifacts_keyring_version=ARTIFACTS_KEYRING_VERSION,
-                index_url=DOWNLOAD_INDEX_URL,
+populate_wheels(index_url=DOWNLOAD_INDEX_URL,
                 python_versions=PYTHON_VERSIONS)
 
 setup(**kwargs)
