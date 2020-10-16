@@ -77,7 +77,7 @@ jobs:
 
   build:
     if: github.event_name == 'pull_request' && contains(github.ref, 'master')
-    name: Build ${{ matrix.py }} - ${{ matrix.os }}
+    name: Build - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: false
@@ -86,14 +86,10 @@ jobs:
         os:
           # - ubuntu
           - windows
-        py: 
-          - 3.7
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.py }}
-        uses: actions/setup-python@v1
-        with:
-          python-version: ${{ matrix.py }}
+        uses: actions/setup-python@v2
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
