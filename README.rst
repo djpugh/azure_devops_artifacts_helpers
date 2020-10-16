@@ -1,6 +1,23 @@
 ******************************
 azure_devops_artifacts_helpers
 ******************************
+.. image:: https://img.shields.io/pypi/v/azure_devops_artifacts_helpers?style=flat-square
+    :target: https://pypi.org/project/azure_devops_artifacts_helpers
+
+.. image:: https://img.shields.io/pypi/implementation/azure_devops_artifacts_helpers?style=flat-square
+    :target: https://pypi.org/project/azure_devops_artifacts_helpers
+
+.. image:: https://img.shields.io/pypi/pyversions/azure_devops_artifacts_helpers?style=flat-square
+    :target: https://pypi.org/project/azure_devops_artifacts_helpers
+
+.. image:: https://img.shields.io/pypi/dm/azure_devops_artifacts_helpers?style=flat-square
+    :target: https://pypistats.org/packages/azure_devops_artifacts_helpers)
+    
+.. image:: https://img.shields.io/pypi/l/azure_devops_artifacts_helpers?style=flat-square
+    :target: https://opensource.org/licenses/MIT)
+
+.. image:: https://github.com/djpugh/azure_devops_artifacts_helpers/workflows/check/badge.svg?branch=main&event=push
+    :target: https://github.com/djpugh/azure_devops_artifacts_helpers/actions?query=workflow%3Acheck)
 
 .. image:: https://codecov.io/gh/djpugh/azure_devops_artifacts_helpers/branch/master/graph/badge.svg?token=APZ8YDJ0UD
     :target: https://codecov.io/gh/djpugh/azure_devops_artifacts_helpers
