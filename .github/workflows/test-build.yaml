@@ -1,5 +1,5 @@
 
-name: Test Build
+name: Build & Test
 
 on: pull_request
 
@@ -39,7 +39,8 @@ jobs:
         python-version: [3.7]
     steps:
       - uses: actions/checkout@v2
-        path: ./repo
+        with:
+          path: ./repo
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v1
         with:
