@@ -21,6 +21,10 @@ jobs:
           pip install tox
       - name: Lint
         run: tox -e lint
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
   test:
     name: Test Python ${{ matrix.py }} - ${{ matrix.os }}
