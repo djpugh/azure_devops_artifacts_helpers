@@ -1,0 +1,1 @@
+artifacts-keyring==0.2.10

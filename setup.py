@@ -9,8 +9,14 @@ Call from command line as::
 
 to see the options available.
 """
+import os
+from pathlib import Path
+import subprocess
+import sys
+
 from setuptools import setup
-from setuptools import find_packages
+from setuptools.config import read_configuration
+from pkg_resources import parse_version, parse_requirements
 
 try:
     import versioneer
@@ -20,14 +26,13 @@ except AttributeError:
     __version__ = '0.0.0'
     cmdclass = None
 
-__author__ = 'David Pugh'
-__email__ = 'djpugh@gmail.com'
 
-description = 'Bootstrap using Private Azure Devops Artifacts Feeds as an index-url with virtualenv/tox'
+WHEELS_DIR = Path(__file__).parent.absolute()/'src'/'azure_devops_artifacts_helpers'/'wheels'
 
-with open('README.rst') as f:
-    readme = f.read()
-    f.close()
+DOWNLOAD_INDEX_URL = os.environ.get('PIP_INDEX_URL', "https://pypi.org/simple")
+
+PLATFORMS = ['win32']  # , 'linux_x86_64', 'any']
+PYTHON_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9']
 
 # We are going to take the approach that the requirements.txt specifies
 # exact (pinned versions) to use but install_requires should only
@@ -40,27 +45,60 @@ with open('README.rst') as f:
 # whereas the requirements.txt file should specify pinned versions to
 # generate a repeatable environment
 
-kwargs = dict(name='azure_devops_artifacts_helpers',
-              version=__version__,
-              author=__author__,
-              author_email=__email__,
-              classifiers=[],
-              packages=find_packages('src'),
-              package_dir={'': 'src'},
-              requires=[],
-              install_requires=[],
-              provides=['azure_devops_artifacts_helpers'],
-              url='https://github.com/djpugh/azure_devops_artifacts_helpers>',
-              test_suite='tests',
-              description=description,
-              long_description=readme,
-              package_data={'': ['*.rst',
-                                 'requirements.txt',
-                                 '*.ini',
-                                 '*.cfg']}
-              )
+with open('requirements.txt') as f:
+    install_requires = []
+    for req in parse_requirements(f.read()):
+        install_requires.append(str(req).replace('==', '>='))
+
+if parse_version(__version__) < parse_version('0.2.0'):
+    development_status = 'Development Status :: 2 - Pre-Alpha'
+elif parse_version(__version__).is_prerelease :
+    development_status = 'Development Status :: 4 - Beta'
+elif parse_version(__version__) >= parse_version('0.2.0'):
+    development_status = 'Development Status :: 5 - Production/Stable'
+elif parse_version(__version__) >= parse_version('1.0.0'):
+    development_status = 'Development Status :: 6 - Mature'
+else:
+    development_status = 'Development Status :: 1 - Planning'
+
+config = read_configuration('setup.cfg')
+# See https://pypi.org/classifiers/
+classifiers = config['metadata']['classifiers']
+classifiers.append(development_status)
+for py_version in PYTHON_VERSIONS:
+    classifiers.append(f'Programming Language :: Python :: {py_version}')
+
+for platform in PLATFORMS:
+    if platform == 'win32':
+        classifiers.append("Operating System :: Microsoft :: Windows")
+    if platform == 'linux_x86_64':
+        classifiers.append("Operating System :: POSIX")
+
+kwargs = {'install_requires': install_requires,
+          'version':  __version__,
+          'classifiers': classifiers}
+
 
 if cmdclass is not None:
     kwargs['cmdclass'] = cmdclass
+
+
+
+def populate_wheels(index_url=DOWNLOAD_INDEX_URL, python_versions=PYTHON_VERSIONS):
+    for platform in PLATFORMS:
+        print(f'PLATFORM: {platform}')
+        for py_version in python_versions:
+            print(f'PYTHON VERSION: {py_version}')
+            subprocess.check_call([sys.executable, '-m', 'pip', 'download',
+                                '--only-binary=:all:',
+                                '--platform', platform,
+                                '--python-version', py_version,
+                                '--implementation', 'py',
+                                '-d', str(WHEELS_DIR),
+                                '--index-url', index_url,
+                                '-r', 'embed_requirements.txt'])
+
+populate_wheels(index_url=DOWNLOAD_INDEX_URL,
+                python_versions=PYTHON_VERSIONS)
 
 setup(**kwargs)
