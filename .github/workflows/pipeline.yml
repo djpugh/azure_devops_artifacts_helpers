@@ -77,7 +77,7 @@ jobs:
 
   build:
     if: github.event_name == 'pull_request' && contains(github.base_ref, 'master')
-    name: Build - ${{ matrix.os }}
+    name: Build Package - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: false
@@ -130,7 +130,7 @@ jobs:
 
   test-build:
     if: github.event_name == 'pull_request' && contains(github.base_ref, 'master')
-    name: Test Build ${{ matrix.py }} - ${{ matrix.os }}
+    name: Test Build Python ${{ matrix.py }} - ${{ matrix.os }}
     needs:
       - build
       - test
@@ -159,9 +159,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
+          path: dist
       - shell: bash
         run: |
-          pip install /dist/$(ls -t /dist/*.whl | head -n1)
+          pip install dist/$(ls -t dist/*.whl | head -n1)
           pip install -r ./repo/requirements.txt
           pip install tox pytest
       - shell: bash
@@ -169,7 +170,7 @@ jobs:
 
   publish-package:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
-    name: Publish
+    name: Publish Package
     runs-on: ubuntu-latest
     needs: 
       - lint
@@ -205,7 +206,7 @@ jobs:
 
   publish-docs:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
-    name: Publish
+    name: Publish Docs
     runs-on: ubuntu-latest
     needs: 
       - docs
