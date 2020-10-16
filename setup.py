@@ -92,6 +92,7 @@ def populate_wheels(index_url=DOWNLOAD_INDEX_URL, python_versions=PYTHON_VERSION
                     '--only-binary=:all:',
                     '--platform', platform,
                     '--python-version', py_version,
+                    '--abi', 'none',
                     '--implementation', 'py',
                     '-d', str(WHEELS_DIR),
                     '--index-url', index_url,
