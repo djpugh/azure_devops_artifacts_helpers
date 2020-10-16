@@ -75,6 +75,23 @@ jobs:
           fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
           github-token: ${{ github.token }}
 
+  codeql-analyze:
+    name: CodeQL Analyze
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Initializes the CodeQL tools for scanning.
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: python
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+
+
   build:
     if: github.event_name == 'pull_request' && contains(github.base_ref, 'master')
     name: Build Package - ${{ matrix.os }}
@@ -202,7 +219,6 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
           TAG: ${{ steps.get_version.outputs.VERSION }}
         if: startsWith(github.ref, 'refs/tags')
-
 
   publish-docs:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
