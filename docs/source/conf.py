@@ -12,9 +12,12 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import os
 import datetime as dt
+import os
+from pathlib import Path
+import subprocess
 
+from pkg_resources import parse_requirements
 
 from azure_devops_artifacts_helpers import __version__
 __author__ = 'David Pugh'
@@ -37,12 +40,24 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.intersphinx',
     'sphinx.ext.mathjax',
+    'sphinx.ext.extlinks',
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
-    'release_changelog'
+    # 'release_changelog'
 ]
 
+with open(str(Path(__file__).parents[2]/'embed_requirements.txt')) as f:
+  artifacts_keyring_version = [u for u in parse_requirements(f.read()) if 'artifacts' in u.name and 'keyring' in u.name][0]
+
+# virtualenv_cli = subprocess.check_call(['virtualenv', '--help'])
+
+extlinks = {
+    "issue": ("https://github.com/djpugh/azure_devops_artifacts_helpers/issues/%s", "#"),
+    "pull": ("https://github.com/djpugh/azure_devops_artifacts_helpers/pull/%s", "PR #"),
+    "user": ("https://github.com/%s", "@"),
+    "pypi": ("https://pypi.org/project/%s", ""),
+}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -89,9 +104,11 @@ default_role = ':any:'
 # If true, '()' will be appended to :func: etc. cross-reference text.
 #add_function_parentheses = True
 
-rst_epilog = """
+rst_epilog = f"""
 .. role:: latex(raw)
    :format: latex
+   
+.. |artifacts_keyring_version| replace:: {artifacts_keyring_version}
 """
 # If true, the current module name will be prepended to all description
 # unit titles (such as .. function::).

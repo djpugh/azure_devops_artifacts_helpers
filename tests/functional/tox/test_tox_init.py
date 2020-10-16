@@ -28,3 +28,12 @@ commands = pip freeze
             self.assertIn('artifacts-keyring', tox_output)
             self.assertIn('requests', tox_output)
             self.assertIn('keyring', tox_output)
+
+    def test_tox_extra_args(self):
+        with tempfile.TemporaryDirectory() as td:
+            with open(str(Path(td)/'tox.ini'), 'w') as f:
+                f.write(self.tox_ini)
+            tox_output = subprocess.check_output([sys.executable, '-m', 'tox', '-vv', '-c', str(Path(td)/'tox.ini'), '--workdir', td, '--sitepackages', '--alwayscopy']).decode()
+            self.assertIn('artifacts-keyring', tox_output)
+            self.assertIn('requests', tox_output)
+            self.assertIn('keyring', tox_output)

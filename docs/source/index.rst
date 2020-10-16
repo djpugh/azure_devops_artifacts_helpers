@@ -1,20 +1,18 @@
-.. figure:: figures/logo.png
-   :figwidth: 50 %
-   :width: 90%
-   :align: center
-   :alt: azure_devops_artifacts_helpers  
-
-
-*****************************
+******************************
 azure_devops_artifacts_helpers
-*****************************
+******************************
 
+Automatically install |artifacts_keyring_version| in new virtualenvs (and tox virtualenvs).
+
+This enables default usage of a private Azure DevOps Artifacts Feed when creating a virtualenv
 
 .. toctree::
-    :maxdepth: 1
-    :numbered:1
-    Release Information <changelog>
-
+   :maxdepth: 1
+   
+   Release Information <changelog>
+   Installation <installation>
+   Usage <usage>
+   Development <development>
 
 
 ---------------------------------------

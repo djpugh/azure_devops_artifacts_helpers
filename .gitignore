@@ -23,6 +23,8 @@ env/*
 reports/*-py*
 .coverage
 reports/*
+.pytest_cache
+__pycache__
 *.c
 src/azure_devops_artifacts_helpers/wheels/*.whl
 Pipfile
