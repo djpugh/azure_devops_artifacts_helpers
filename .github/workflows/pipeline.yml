@@ -114,7 +114,7 @@ jobs:
           pip install tox
 
       - name: Build azure_devops_artifacts_helpers
-        run: tox -e build
+        run: tox -e build -vvv
 
       - name: Store build artifact
         uses: actions/upload-artifact@v2
