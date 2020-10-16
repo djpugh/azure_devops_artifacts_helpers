@@ -17,7 +17,7 @@ azure_devops_artifacts_helpers
     :target: https://opensource.org/licenses/MIT)
 
 .. image:: https://github.com/djpugh/azure_devops_artifacts_helpers/workflows/pipeline/badge.svg?branch=master&event=push
-    :target: https://github.com/djpugh/azure_devops_artifacts_helpers/actions?query=workflow%3Acheck)
+    :target: https://github.com/djpugh/azure_devops_artifacts_helpers/actions?query=workflow%pipeline
 
 .. image:: https://codecov.io/gh/djpugh/azure_devops_artifacts_helpers/branch/master/graph/badge.svg?token=APZ8YDJ0UD
     :target: https://codecov.io/gh/djpugh/azure_devops_artifacts_helpers
