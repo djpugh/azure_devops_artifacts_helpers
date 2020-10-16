@@ -162,7 +162,7 @@ jobs:
           path: dist
       - shell: bash
         run: |
-          pip install dist/$(ls -t dist/*.whl | head -n1)
+          pip install $(ls -t dist/*.whl | head -n1)
           pip install -r ./repo/requirements.txt
           pip install tox pytest
       - shell: bash
