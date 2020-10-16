@@ -50,9 +50,10 @@ jobs:
         with:
           name: build-${{ matrix.python-version }}
       - shell: bash
-        run: pip install /dist/$(ls -t /dist/*.whl | head -n1)
-        run: pip install -r ./repo/requirements.txt
-        run: pip install tox pytest
+        run: |
+          pip install /dist/$(ls -t /dist/*.whl | head -n1)
+          pip install -r ./repo/requirements.txt
+          pip install tox pytest
       - shell: bash
         run: pytest ./repo/tests/functional
       
