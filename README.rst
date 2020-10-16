@@ -6,7 +6,7 @@ Bootstrap using Private Azure Devops Artifacts Feeds as an index-url with virtua
 
 Install using ``pip install azure_devops_artifacts_helpers``
 
-Then use ``virtualenv <target_dir> --seed <azdo-app-data|azdo-pip>``
+Then use ``virtualenv <target_dir> --seeder azdo-pip``
 
 To create a virtualenv with the ``artifacts-keyring`` package installed.
 

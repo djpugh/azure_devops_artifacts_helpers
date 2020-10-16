@@ -25,7 +25,7 @@ if tox:
         # add interpreter explicitly, to prevent using default (virtualenv.ini)
         args.extend(["--python", str(config_interpreter)])
         # Add seeder explicitly
-        args.extend(["--seeder", 'azdo-app-data'])
+        args.extend(["--seeder", 'azdo-pip'])
 
         cleanup_for_venv(venv)
 

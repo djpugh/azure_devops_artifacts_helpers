@@ -5,7 +5,6 @@ from pkg_resources import resource_filename
 
 from virtualenv.seed.embed.base_embed import BaseEmbed
 from virtualenv.seed.embed.pip_invoke import PipInvoke
-from virtualenv.seed.embed.via_app_data.via_app_data import FromAppData
 from virtualenv.seed.wheels import Version, Wheel, bundle, embed
 
 
@@ -46,13 +45,9 @@ class AzureDevopsArtifactsMixin(BaseEmbed):
         """Return the dictionary of distributions."""
         base = super().distributions()
         for pkg in EXT_DIR.glob('artifacts_keyring*.whl'):
-            base[pkg.name.split('-')[0]] = Version.embed
+            base[pkg.name.split('-')[0]] = Version.bundle
         return base
 
 
 class AzureDevopsArtifactsPipInvoke(AzureDevopsArtifactsMixin, PipInvoke):
     """Mixed in Azure Devops artifacts-keyring into seed packages for pip seeder."""
-
-
-class AzureDevopsArtifactsFromAppData(AzureDevopsArtifactsMixin, FromAppData):
-    """Mixed in Azure Devops artifacts-keyring into seed packages for app-data seeder."""
