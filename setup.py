@@ -86,17 +86,18 @@ if cmdclass is not None:
 
 def populate_wheels(index_url=DOWNLOAD_INDEX_URL, python_versions=PYTHON_VERSIONS):
     for platform in PLATFORMS:
-        print(f'PLATFORM: {platform}')
         for py_version in python_versions:
-            print(f'PYTHON VERSION: {py_version}')
-            print(subprocess.check_output([sys.executable, '-m', 'pip', 'download',
-                                           '--only-binary=:all:',
-                                           '--platform', platform,
-                                           '--python-version', py_version,
-                                           '--implementation', 'py',
-                                           '-d', str(WHEELS_DIR),
-                                           '--index-url', index_url,
-                                           '-r', 'embed_requirements.txt']).decode())
+            print(f'PLATFORM: {platform} - PYTHON VERSION: {py_version}')
+            args = [sys.executable, '-m', 'pip', 'download',
+                    '--only-binary=:all:',
+                    '--platform', platform,
+                    '--python-version', py_version,
+                    '--implementation', 'py',
+                    '-d', str(WHEELS_DIR),
+                    '--index-url', index_url,
+                    '-r', 'embed_requirements.txt']
+            print(args)
+            print(subprocess.check_output(args).decode())
     print('Downloaded Packages')
     print(os.listdir(str(WHEELS_DIR)))
 
