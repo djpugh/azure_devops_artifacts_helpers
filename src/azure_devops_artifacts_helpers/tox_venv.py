@@ -5,7 +5,7 @@ try:
     import tox
     from tox.venv import cleanup_for_venv, _SKIP_VENV_CREATION, reporter
 
-except (ImportError, ModuleNotFoundError):
+except (ImportError, ModuleNotFoundError):  # pragma: no cover
     tox = False
 
 
@@ -41,13 +41,13 @@ if tox:
                     cwd=base_path,
                     redirect=reporter.verbosity() < reporter.Verbosity.DEBUG,
                 )
-            except KeyboardInterrupt:
+            except KeyboardInterrupt:  # pragma: no cover
                 venv.status = "keyboardinterrupt"
                 raise
         # Return non-None to indicate plugin has completed
         return True
 
 
-else:
+else:  # pragma: no cover
     def tox_venv(venv, action):
         """Empty method if tox not installed."""
