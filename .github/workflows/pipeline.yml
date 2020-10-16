@@ -1,5 +1,5 @@
 
-name: Lint & Test
+name: Pipeline
 
 on:
   push:
