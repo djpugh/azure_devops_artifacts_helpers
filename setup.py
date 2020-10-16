@@ -32,7 +32,7 @@ WHEELS_DIR = Path(__file__).parent.absolute()/'src'/'azure_devops_artifacts_help
 ARTIFACTS_KEYRING_VERSION = "0.2.10"
 DOWNLOAD_INDEX_URL = os.environ.get('PIP_INDEX_URL', "https://pypi.org/simple")
 
-PLATFORMS = ['win32', 'linux_x86_64', 'any']
+PLATFORMS = ['win32']  # , 'linux_x86_64', 'any']
 PYTHON_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9']
 
 # We are going to take the approach that the requirements.txt specifies
@@ -87,7 +87,9 @@ if cmdclass is not None:
 
 def populate_wheels(artifacts_keyring_version=ARTIFACTS_KEYRING_VERSION, index_url=DOWNLOAD_INDEX_URL, python_versions=PYTHON_VERSIONS):
     for platform in PLATFORMS:
+        print(f'PLATFORM: {platform}')
         for py_version in python_versions:
+            print(f'PYTHON VERSION: {py_version}')
             subprocess.check_call([sys.executable, '-m', 'pip', 'download',
                                 '--only-binary=:all:',
                                 '--platform', platform,
