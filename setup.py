@@ -32,7 +32,8 @@ WHEELS_DIR = Path(__file__).parent.absolute()/'src'/'azure_devops_artifacts_help
 ARTIFACTS_KEYRING_VERSION = "0.2.10"
 DOWNLOAD_INDEX_URL = os.environ.get('PIP_INDEX_URL', "https://pypi.org/simple")
 
-PYTHON_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9']
+PLATFORMS = ['win32', 'linux_x86_64', 'any']
+PYTHON_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9']s
 
 # We are going to take the approach that the requirements.txt specifies
 # exact (pinned versions) to use but install_requires should only
@@ -67,6 +68,13 @@ classifiers = config['metadata']['classifiers']
 classifiers.append(development_status)
 for py_version in PYTHON_VERSIONS:
     classifiers.append(f'Programming Language :: Python :: {py_version}')
+
+for platform in PLATFORMS:
+    if platform == 'win32':
+        classifiers.append("Operating System :: Microsoft :: Windows")
+    if platform == 'linux_x86_64':
+        classifiers.append("Operating System :: POSIX")
+
 kwargs = {'install_requires': install_requires,
           'version':  __version__,
           'classifiers': classifiers}
@@ -78,15 +86,16 @@ if cmdclass is not None:
 
 
 def populate_wheels(artifacts_keyring_version=ARTIFACTS_KEYRING_VERSION, index_url=DOWNLOAD_INDEX_URL, python_versions=PYTHON_VERSIONS):
-    for py_version in python_versions:
-        subprocess.check_call([sys.executable, '-m', 'pip', 'download',
-                            '--only-binary=:all:',
-                            '--platform', 'any',
-                            '--python-version', py_version,
-                            '--implementation', 'py',
-                            '-d', str(WHEELS_DIR),
-                            '--index-url', index_url,
-                            f'artifacts-keyring=={artifacts_keyring_version}'])
+    for platform in PLATFORMS:
+        for py_version in python_versions:
+            subprocess.check_call([sys.executable, '-m', 'pip', 'download',
+                                '--only-binary=:all:',
+                                '--platform', platform,
+                                '--python-version', py_version,
+                                '--implementation', 'py',
+                                '-d', str(WHEELS_DIR),
+                                '--index-url', index_url,
+                                f'artifacts-keyring=={artifacts_keyring_version}'])
 
 populate_wheels(artifacts_keyring_version=ARTIFACTS_KEYRING_VERSION,
                 index_url=DOWNLOAD_INDEX_URL,
