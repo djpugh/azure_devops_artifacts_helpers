@@ -31,7 +31,7 @@ WHEELS_DIR = Path(__file__).parent.absolute()/'src'/'azure_devops_artifacts_help
 
 DOWNLOAD_INDEX_URL = os.environ.get('PIP_INDEX_URL', "https://pypi.org/simple")
 
-PLATFORMS = ['win32',  'manylinux1_x86_64']
+PLATFORMS = ['win32']  # ,  'manylinux1_x86_64']
 PYTHON_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9']
 
 # We are going to take the approach that the requirements.txt specifies
@@ -92,7 +92,6 @@ def populate_wheels(index_url=DOWNLOAD_INDEX_URL, python_versions=PYTHON_VERSION
                     '--only-binary=:all:',
                     '--platform', platform,
                     '--python-version', py_version,
-                    '--abi', 'none',
                     '--implementation', 'py',
                     '-d', str(WHEELS_DIR),
                     '--index-url', index_url,
