@@ -44,7 +44,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
-    # 'release_changelog'
+    'sphinx_github_changelog'
 ]
 
 with open(str(Path(__file__).parents[2]/'embed_requirements.txt')) as f:
