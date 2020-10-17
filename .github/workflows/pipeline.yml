@@ -144,7 +144,7 @@ jobs:
 
   build:
     if: github.event_name == 'pull_request' && contains(github.base_ref, 'master')
-    name: Build Package - ${{ matrix.os }}
+    name: Build Package
     runs-on: ${{ matrix.os }}-latest
     needs:
       - collate-packages
