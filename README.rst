@@ -25,6 +25,8 @@ azure_devops_artifacts_helpers
 .. image:: https://app.fossa.com/api/projects/custom%2B20832%2Fgithub.com%2Fdjpugh%2Fazure_devops_artifacts_helpers.svg?type=shield
     :target: https://app.fossa.com/projects/custom%2B20832%2Fgithub.com%2Fdjpugh%2Fazure_devops_artifacts_helpers?ref=badge_shield
 
+.. image:: https://sonarcloud.io/api/project_badges/measure?project=djpugh_azure_devops_artifacts_helpers&metric=alert_status
+    :target: https://sonarcloud.io/dashboard?id=djpugh_azure_devops_artifacts_helpers
 
 Bootstrap using Private Azure Devops Artifacts Feeds as an index-url with virtualenv/tox
 
