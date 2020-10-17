@@ -273,7 +273,7 @@ jobs:
         with:
           args: "--trace"
         env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          GITHUB_TOKEN: "${{ secrets.AUTOMERGE_TOKEN }}"
           MERGE_LABELS: automerge,!nomerge
           MERGE_FORKS: false
           MERGE_DELETE_BRANCH: true
