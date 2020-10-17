@@ -28,3 +28,4 @@ __pycache__
 *.c
 src/azure_devops_artifacts_helpers/wheels/*.whl
 Pipfile
+.coverage*
