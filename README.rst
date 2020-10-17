@@ -16,10 +16,10 @@ azure_devops_artifacts_helpers
     :target: https://pypi.org/project/azure_devops_artifacts_helpers
 
 .. image:: https://img.shields.io/pypi/dm/azure_devops_artifacts_helpers?style=flat-square
-    :target: https://pypistats.org/packages/azure_devops_artifacts_helpers)
+    :target: https://pypistats.org/packages/azure_devops_artifacts_helpers
 
 .. image:: https://img.shields.io/pypi/l/azure_devops_artifacts_helpers?style=flat-square
-    :target: https://opensource.org/licenses/MIT)
+    :target: https://opensource.org/licenses/MIT
 
 .. image:: https://github.com/djpugh/azure_devops_artifacts_helpers/workflows/Pipeline/badge.svg?branch=master&event=push
     :target: https://github.com/djpugh/azure_devops_artifacts_helpers/actions?query=workflow%3APipeline
