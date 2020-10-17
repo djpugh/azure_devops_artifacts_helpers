@@ -33,6 +33,13 @@ Automatically install |artifacts_keyring_version| in new virtualenvs (and tox vi
 
 This enables default usage of a private Azure DevOps Artifacts Feed when creating a virtualenv
 
+The repository is open source (MIT Licensed) on |github| `Github <https://github.com/djpugh/azure_devops_artifacts_helpers>`_
+
+.. |github| image:: https://api.iconify.design/logos-github-icon.svg
+    :target: https://github.com/djpugh/azure_devops_artifacts_helpers
+
+
+
 .. toctree::
    :maxdepth: 1
    
