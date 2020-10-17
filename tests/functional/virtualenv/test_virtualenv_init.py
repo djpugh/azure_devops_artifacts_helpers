@@ -9,6 +9,7 @@ if sys.platform.startswith('win'):
 else:
     pip_path = Path('.venv')/'bin'/'pip'
 
+
 class VirtualEnvTestCase(unittest.TestCase):
 
     def test_venv_pip(self):

@@ -31,8 +31,9 @@ jobs:
         os:
           - ubuntu
           - windows
-          # - macos
+          - macos
         py: 
+          - 3.5
           - 3.6
           - 3.7
           - 3.8
@@ -103,7 +104,7 @@ jobs:
         os:
           - ubuntu
           - windows
-          # - macos
+          - macos
       max-parallel: 4
 
     steps:
@@ -214,8 +215,9 @@ jobs:
         os:
           - ubuntu
           - windows
-          # - macos
+          - macos
         py: 
+          - 3.5
           - 3.6
           - 3.7
           - 3.8
