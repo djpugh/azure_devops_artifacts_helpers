@@ -2,10 +2,9 @@
 from pathlib import Path
 
 from pkg_resources import resource_filename
-
 from virtualenv.seed.embed.base_embed import BaseEmbed
 from virtualenv.seed.embed.pip_invoke import PipInvoke
-from virtualenv.seed.wheels import Version, Wheel, bundle, embed
+from virtualenv.seed.wheels import bundle, embed, Version, Wheel
 
 
 EXT_DIR = Path(resource_filename('azure_devops_artifacts_helpers.wheels', ''))
