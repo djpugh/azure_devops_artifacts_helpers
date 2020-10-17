@@ -16,7 +16,3 @@ about affecting global python installs, and make sure this is installed in the s
 
     python -m pip install --user azure_devops_artifacts_helpers
     python -m virtualenv --help  # should see azdo-pip in the --seeders options
-
-
-.. warning::
-    ``azure_devops_artifacts_helpers`` currently only works on windows due to issues downloading ``dotnetcore2``

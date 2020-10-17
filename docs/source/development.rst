@@ -30,6 +30,8 @@ Setup
 
 - :pypi:`tox`: to automatically get the projects development dependencies and run the test suite.
 
+
+
 Running from source tree
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -41,11 +43,24 @@ The easiest way to do this is to generate the development tox environment, and t
     tox -e dev
     .venv/Scripts/virtualenv  # on Windows
 
+
+Populating wheels
+~~~~~~~~~~~~~~~~~
+
+Due to challenges with :pypi:`pip` ``download``, the full set of wheels is popualated at build time based on the provided ``embed_requirements.txt``.
+When developing locally (and e.g. for testing locally), it's necessary to populate the wheels for that platform. The easiest way to do this is using
+``tox``
+
+.. code-block:: console
+
+    tox -e populate
+
+
 Running tests
 ~~~~~~~~~~~~~
 
 ``azure_devops_artifacts_helpers`` tests are written using the :pypi:`pytest` test framework. :pypi:`tox` is used to automate the setup
-and execution of ``azure_devops_artifacts_helpers`` tests.
+and execution of ``azure_devops_artifacts_helpers`` tests. This requires populating the wheels (see above).
 
 To run tests locally execute:
 
@@ -54,6 +69,7 @@ To run tests locally execute:
     tox -e test
 
 This will run the test suite for the same Python version as under which ``tox`` is installed.
+
 
 
 Running linters
@@ -88,7 +104,7 @@ that folder.
 Release
 ~~~~~~~
 
-We release after new :pypi:`virtualenv` releases to confirm that our extensions are still working. 
+We release after new :pypi:`virtualenv` and :pypi:`artifacts-keyring` releases to confirm that our extensions are still working. 
 
 Contributing
 -------------
