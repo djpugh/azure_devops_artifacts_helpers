@@ -35,8 +35,8 @@ class AzureDevopsArtifactsMixin(BaseEmbed):
     def __init__(self, options):
         """Add the extra attributes for the extensions."""
         for dist in self.distributions().keys():
-            setattr(self, f'no_{dist}', getattr(options, f'no_{dist}'))
-            setattr(self, f'{dist}_version', getattr(options, dist))
+            setattr(self, 'no_'+dist, getattr(options, 'no_'+dist))
+            setattr(self, dist+'_version', getattr(options, dist))
         super(AzureDevopsArtifactsMixin, self).__init__(options)
         self.extra_search_dir.append(EXT_DIR)
 
