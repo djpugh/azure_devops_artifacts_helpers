@@ -2,6 +2,9 @@
 azure_devops_artifacts_helpers
 ******************************
 
+.. image:: https://img.shields.io/github/license/djpugh/azure_devops_artifacts_helpers.svg
+    :target: https://github.com/djpugh/azure_devops_artifacts_helpers/blob/master/LICENSE
+
 .. image:: https://img.shields.io/pypi/v/azure_devops_artifacts_helpers?style=flat-square
     :target: https://pypi.org/project/azure_devops_artifacts_helpers
 
@@ -28,6 +31,13 @@ azure_devops_artifacts_helpers
 
 .. image:: https://sonarcloud.io/api/project_badges/measure?project=djpugh_azure_devops_artifacts_helpers&metric=alert_status
     :target: https://sonarcloud.io/dashboard?id=djpugh_azure_devops_artifacts_helpers
+
+.. image:: https://img.shields.io/github/issues/djpugh/azure_devops_artifacts_helpers
+    :target: https://github.com/djpugh/azure_devops_artifacts_helpers/issues
+
+.. image:: https://img.shields.io/github/issues-pr-raw/djpugh/azure_devops_artifacts_helpers
+    :target: https://github.com/djpugh/azure_devops_artifacts_helpers/pulls
+
 
 Automatically install |artifacts_keyring_version| in new virtualenvs (and tox virtualenvs).
 
