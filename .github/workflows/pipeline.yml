@@ -61,7 +61,20 @@ jobs:
         flags: tests
         name: ${{ matrix.py }} - ${{ matrix.os }}
 
-  scan:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  license-scan:
     if: github.event_name == 'pull_request' && contains(github.base_ref, 'master')
 
     name: Scan Licenses
@@ -269,7 +282,8 @@ jobs:
       - lint
       - test
       - build
-      - scan
+      - sonarcloud
+      - license-scan
       - test-build
     steps:
       - uses: actions/checkout@v2
