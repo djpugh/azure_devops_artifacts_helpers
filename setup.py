@@ -29,7 +29,7 @@ except AttributeError:
 
 
 with open(str(Path(__file__).parent.absolute()/'supported_python_versions.json')) as f:
-    DEFAULT_PYTHON_VERSIONS = json.load(f)
+    PYTHON_VERSIONS = json.load(f)
 
 # We are going to take the approach that the requirements.txt specifies
 # exact (pinned versions) to use but install_requires should only
@@ -63,7 +63,7 @@ config = read_configuration('setup.cfg')
 classifiers = config['metadata']['classifiers']
 classifiers.append(development_status)
 for py_version in PYTHON_VERSIONS:
-    classifiers.append(f'Programming Language :: Python :: {py_version}')
+    classifiers.append('Programming Language :: Python :: '+py_version)
 
 
 kwargs = {'install_requires': install_requires,
