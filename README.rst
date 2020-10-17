@@ -28,7 +28,11 @@ azure_devops_artifacts_helpers
 .. image:: https://sonarcloud.io/api/project_badges/measure?project=djpugh_azure_devops_artifacts_helpers&metric=alert_status
     :target: https://sonarcloud.io/dashboard?id=djpugh_azure_devops_artifacts_helpers
 
+
 Bootstrap using Private Azure Devops Artifacts Feeds as an index-url with virtualenv/tox
+
+Summary
+~~~~~~~
 
 Install using ``pip install azure_devops_artifacts_helpers``
 
@@ -38,6 +42,19 @@ To create a virtualenv with the ``artifacts-keyring`` package installed.
 
 This also includes an extension for ``tox``, which will activate automatically (may require configuring
 ``requires`` in the ``tox`` config)
+
+Links
+~~~~~
+
+* `Full Documentation <https://djpugh.github.io/azure_devops_artifacts_helpers>`_
+* `Installation <https://djpugh.github.io/azure_devops_artifacts_helpers/installation.html>`_
+* `Changelog <https://djpugh.github.io/azure_devops_artifacts_helpers/changelog.html>`_
+* `Issues <https://github.com/djpugh/azure_devops_artifacts_helpers/issues>`_
+* `PyPI <https://pypi.org/project/azure_devops_artifacts_helpers>`_
+* |github| `Github <https://github.com/djpugh/azure_devops_artifacts_helpers>`_
+
+.. |github| image:: https://api.iconify.design/logos-github-icon.svg
+    :target: https://github.com/djpugh/azure_devops_artifacts_helpers
 
 Coverage
 ~~~~~~~~
