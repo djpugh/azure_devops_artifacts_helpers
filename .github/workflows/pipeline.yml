@@ -61,6 +61,14 @@ jobs:
         directory: ./reports/
         flags: tests
         name: ${{ matrix.py }} - ${{ matrix.os }}
+    - name: Configure testspace
+      uses: testspace-com/setup-testspace@v1
+      with:
+        domain: ${{ github.repository_owner }}
+    - name: Push result to Testspace server
+      run: |
+        testspace reports/*-test.xml 
+      if: always()
 
   sonarcloud:
     name: SonarCloud
