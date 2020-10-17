@@ -3,3 +3,4 @@ include requirements.txt
 include versioneer.py
 include src/azure_devops_artifacts_helpers/_version.py
 include src/azure_devops_artifacts_helpers/wheels/*.whl
+inlcude supported_python_versions.json
