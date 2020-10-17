@@ -261,7 +261,9 @@ jobs:
       - lint
       - test
       - build
-      - scan
+      - license-scan
+      - codeql-analyze
+      - sonarcloud
       - test-build
     steps:
       - name: automerge
@@ -284,6 +286,7 @@ jobs:
       - build
       - sonarcloud
       - license-scan
+      - codeql-analyze
       - test-build
     steps:
       - uses: actions/checkout@v2
