@@ -164,7 +164,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox
       
-      - name: Download build
+      - name: Download collated wheels
         uses: actions/download-artifact@v2
         with:
           path: wheels
@@ -197,7 +197,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox
 
-      - name: Download build
+      - name: Download collated wheels
         uses: actions/download-artifact@v2
         with:
           path: wheels
