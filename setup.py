@@ -9,6 +9,7 @@ Call from command line as::
 
 to see the options available.
 """
+import json
 import os
 from pathlib import Path
 import subprocess
@@ -27,11 +28,8 @@ except AttributeError:
     cmdclass = None
 
 
-WHEELS_DIR = Path(__file__).parent.absolute()/'src'/'azure_devops_artifacts_helpers'/'wheels'
-
-DOWNLOAD_INDEX_URL = os.environ.get('PIP_INDEX_URL', "https://pypi.org/simple")
-
-PYTHON_VERSIONS = ['3.5', '3.6', '3.7', '3.8', '3.9']
+with open(str(Path(__file__).parent.absolute()/'supported_python_versions.json')) as f:
+    PYTHON_VERSIONS = json.load(f)
 
 # We are going to take the approach that the requirements.txt specifies
 # exact (pinned versions) to use but install_requires should only
@@ -65,7 +63,7 @@ config = read_configuration('setup.cfg')
 classifiers = config['metadata']['classifiers']
 classifiers.append(development_status)
 for py_version in PYTHON_VERSIONS:
-    classifiers.append(f'Programming Language :: Python :: {py_version}')
+    classifiers.append('Programming Language :: Python :: '+py_version)
 
 
 kwargs = {'install_requires': install_requires,
@@ -76,5 +74,5 @@ kwargs = {'install_requires': install_requires,
 if cmdclass is not None:
     kwargs['cmdclass'] = cmdclass
 
-
-setup(**kwargs)
+if __name__ == "__main__":
+    setup(**kwargs)
