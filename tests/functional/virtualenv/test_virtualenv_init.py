@@ -12,6 +12,7 @@ else:
     pip_path = Path(TEST_VENV_NAME)/'bin'/'pip'
 
 
+
 class VirtualEnvTestCase(unittest.TestCase):
 
     def test_venv_pip(self):
