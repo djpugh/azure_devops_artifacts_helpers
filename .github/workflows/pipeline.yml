@@ -65,6 +65,7 @@ jobs:
       uses: testspace-com/setup-testspace@v1
       with:
         domain: ${{ github.repository_owner }}
+      if: always()
     - name: Push result to Testspace server
       run: |
         testspace reports/*-test.xml 
