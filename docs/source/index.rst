@@ -48,15 +48,19 @@ The repository is open source (MIT Licensed) on |github| `Github <https://github
 .. |github| image:: https://api.iconify.design/logos-github-icon.svg
     :target: https://github.com/djpugh/azure_devops_artifacts_helpers
 
+.. toctree::
+    :caption: Basic Use
+    :maxdepth: 1
+    
+    Installation <installation>
+    Usage <usage>
 
 .. toctree::
-   :maxdepth: 1
-   
-   Release Information <changelog>
-   Installation <installation>
-   Usage <usage>
-   Development <development>
+    :caption: Changes and Contributing
+    :maxdepth: 1
 
+    Release Information <changelog>
+    Contributing <development>
 
 ---------------------------------------
 
