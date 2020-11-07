@@ -3,6 +3,10 @@ name: Pipeline
 
 on:
   push:
+    branches-ignore:
+      - gh-pages
+    tags-ignore:
+      - docs-*
   pull_request:
   release:
     types: [published]
@@ -85,7 +89,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   license-scan:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'master') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
+    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
 
     name: Scan Licenses
     runs-on: ubuntu-latest
@@ -117,7 +121,7 @@ jobs:
       uses: github/codeql-action/analyze@v1
 
   collate-packages:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'master') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
+    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Collate Wheels - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}-latest
     strategy:
@@ -151,7 +155,7 @@ jobs:
           ./wheels/*
 
   build:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'master') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
+    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Build Package
     runs-on: ${{ matrix.os }}-latest
     needs:
@@ -192,7 +196,7 @@ jobs:
             dist/*
 
   docs:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'master') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
+    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Build docs
     needs:
       - collate-packages
@@ -227,7 +231,7 @@ jobs:
             docs/html/*
 
   test-build:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'master') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
+    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Test Build Python ${{ matrix.py }} - ${{ matrix.os }}
     needs:
       - build
@@ -324,7 +328,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags')
 
   publish-docs:
-    if: (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
+    if: (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')  && !(contains(github.ref, 'gh-pages') || contains(github.ref, 'docs')) ) || github.event_name == 'release'
     name: Publish Docs
     runs-on: ubuntu-latest
     needs: 
@@ -336,9 +340,15 @@ jobs:
         with:
           name: docs
           path: ./docs/html
-
+      - name: Get Version
+        id: get_version
+        run: |
+          tag_name=$(echo ${{github.ref}} | cut -d/ -f3)
+          echo "::set-output name=tag_name::$tag_name"
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/html
+          tag_name: docs-${{ steps.get_version.outputs.tag_name }}
+          tag_message: 'Docs ${{ steps.get_version.outputs.tag_name }}'

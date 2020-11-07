@@ -18,6 +18,7 @@ from pathlib import Path
 import subprocess
 
 from pkg_resources import parse_requirements
+import sphinx_material
 
 from azure_devops_artifacts_helpers import __version__
 __author__ = 'David Pugh'
@@ -44,11 +45,12 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
-    'sphinx_github_changelog'
+    'sphinx_github_changelog',
+    'sphinx_material'
 ]
 
 with open(str(Path(__file__).parents[2]/'embed_requirements.txt')) as f:
-  artifacts_keyring_version = [u for u in parse_requirements(f.read()) if 'artifacts' in u.name and 'keyring' in u.name][0]
+  artifacts_keyring_version = [f'``{u}``' for u in parse_requirements(f.read()) if 'artifacts' in u.name and 'keyring' in u.name][0]
 
 # virtualenv_cli = subprocess.check_call(['virtualenv', '--help'])
 
@@ -119,7 +121,7 @@ rst_epilog = f"""
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+# pygments_style = 'sphinx'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
@@ -132,12 +134,66 @@ autoclass_content='both'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+# on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-if not on_rtd:  # only import and set the theme if we're building docs locally
-    import sphinx_rtd_theme
-    html_theme = 'sphinx_rtd_theme'
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+# if not on_rtd:  # only import and set the theme if we're building docs locally
+#     import sphinx_rtd_theme
+#     html_theme = 'sphinx_rtd_theme'
+#     html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+html_theme = 'sphinx_material'
+
+# Set link name generated in the top bar.
+html_title = 'Azure DevOps Artifacts Helpers'
+
+html_theme_path = sphinx_material.html_theme_path()
+html_context = sphinx_material.get_html_context()
+html_theme_options = {
+
+    # Set the name of the project to appear in the navigation.
+    'nav_title': html_title,
+
+    # Specify a base_url used to generate sitemap.xml. If not
+    # specified, then no sitemap will be built.
+    'base_url': 'https://djpugh.github.io/azure_devops_artifacts_helpers',
+
+    # Set the repo location to get a badge with stats
+    'repo_url': 'https://github.com/djpugh/azure_devops_artifacts_helpers/',
+    'repo_name': 'azure_devops_artifacts_helpers',
+
+    # Visible levels of the global TOC; -1 means unlimited
+    'globaltoc_depth': -1,
+    # If False, expand all TOC entries
+    'globaltoc_collapse': False,
+    # If True, show hidden TOC entries
+    'globaltoc_includehidden': False,
+    "logo_icon": "cloud_circle",
+    "repo_type": "github",
+    "globaltoc_depth": 2,
+    "color_primary": "pink",
+    "color_accent": "indigo",
+    "touch_icon": "images/apple-icon-152x152.png",
+    "theme_color": "#2196f3",
+    "master_doc": False,
+    "nav_links": [
+        {
+            "href": "https://virtualenv.pypa.io/en/stable/",
+            "internal": False,
+            "title": "Virtualenv",
+        },
+        {
+            "href": "https://azure.microsoft.com/en-gb/services/devops/",
+            "internal": False,
+            "title": "Azure DevOps",
+        }
+    ],
+    "heroes": {
+        "index": "Adding Azure Active Directory Authentical for fastAPI",
+    },
+    "version_dropdown": False,
+}
+html_sidebars = {
+    "**": ["logo-text.html", "globaltoc.html", "localtoc.html", "searchbox.html"]
+}
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
