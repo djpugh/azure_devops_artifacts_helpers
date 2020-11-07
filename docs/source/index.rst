@@ -54,7 +54,6 @@ The repository is open source (MIT Licensed) on |github| `Github <https://github
     
     Installation <installation>
     Usage <usage>
- 
 
 .. toctree::
     :caption: Changes and Contributing
