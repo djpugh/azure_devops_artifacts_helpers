@@ -49,7 +49,6 @@ The repository is open source (MIT Licensed) on |github| `Github <https://github
     :target: https://github.com/djpugh/azure_devops_artifacts_helpers
 
 
-
 .. toctree::
    :maxdepth: 1
    
