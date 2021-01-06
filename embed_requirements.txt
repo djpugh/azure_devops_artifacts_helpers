@@ -1,2 +1,2 @@
-artifacts-keyring==0.3.0
+artifacts-keyring==0.3.1
 importlib-metadata
