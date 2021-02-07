@@ -31,17 +31,17 @@ commands = pip freeze
             pass
 
     def test_tox(self):
-        with open(str(Path(self.td)/TOX_INI), 'w') as f:
+        with open(str(Path(self.td.name)/TOX_INI), 'w') as f:
             f.write(self.tox_ini)
-        tox_output = subprocess.check_output([sys.executable, '-m', 'tox', '-vv', '-c', str(Path(self.td)/TOX_INI), '--workdir', self.td]).decode()
+        tox_output = subprocess.check_output([sys.executable, '-m', 'tox', '-vv', '-c', str(Path(self.td.name)/TOX_INI), '--workdir', self.td.name]).decode()
         self.assertIn('artifacts-keyring', tox_output)
         self.assertIn('requests', tox_output)
         self.assertIn('keyring', tox_output)
 
     def test_tox_extra_args(self):
-        with open(str(Path(self.td)/TOX_INI), 'w') as f:
+        with open(str(Path(self.td.name)/TOX_INI), 'w') as f:
             f.write(self.tox_ini)
-        tox_output = subprocess.check_output([sys.executable, '-m', 'tox', '-vv', '-c', str(Path(self.td)/TOX_INI), '--workdir', self.td, '--sitepackages', '--alwayscopy']).decode()
+        tox_output = subprocess.check_output([sys.executable, '-m', 'tox', '-vv', '-c', str(Path(self.td.name)/TOX_INI), '--workdir', self.td.name, '--sitepackages', '--alwayscopy']).decode()
         self.assertIn('artifacts-keyring', tox_output)
         self.assertIn('requests', tox_output)
         self.assertIn('keyring', tox_output)

@@ -24,8 +24,8 @@ class VirtualEnvTestCase(unittest.TestCase):
             pass
 
     def test_venv_pip(self):
-        subprocess.check_call([sys.executable, '-m', 'virtualenv', str(Path(self.td)/TEST_VENV_NAME), '--seeder', 'azdo-pip'])
-        installed_packages = subprocess.check_output([str(Path(self.td)/pip_path), 'freeze']).decode()
+        subprocess.check_call([sys.executable, '-m', 'virtualenv', str(Path(self.td.name)/TEST_VENV_NAME), '--seeder', 'azdo-pip'])
+        installed_packages = subprocess.check_output([str(Path(self.td.name)/pip_path), 'freeze']).decode()
         self.assertIn('artifacts-keyring', installed_packages)
         self.assertIn('requests', installed_packages)
         self.assertIn('keyring', installed_packages)
