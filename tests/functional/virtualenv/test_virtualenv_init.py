@@ -14,10 +14,18 @@ else:
 
 class VirtualEnvTestCase(unittest.TestCase):
 
+    def setUp(self):
+        self.td = tempfile.TemporaryDirectory()
+
+    def tearDown(self):
+        try:
+            self.td.cleanup()
+        except PermissionError:
+            pass
+
     def test_venv_pip(self):
-        with tempfile.TemporaryDirectory() as td:
-            subprocess.check_call([sys.executable, '-m', 'virtualenv', str(Path(td)/TEST_VENV_NAME), '--seeder', 'azdo-pip'])
-            installed_packages = subprocess.check_output([str(Path(td)/pip_path), 'freeze']).decode()
-            self.assertIn('artifacts-keyring', installed_packages)
-            self.assertIn('requests', installed_packages)
-            self.assertIn('keyring', installed_packages)
+        subprocess.check_call([sys.executable, '-m', 'virtualenv', str(Path(self.td.name)/TEST_VENV_NAME), '--seeder', 'azdo-pip'])
+        installed_packages = subprocess.check_output([str(Path(self.td.name)/pip_path), 'freeze']).decode()
+        self.assertIn('artifacts-keyring', installed_packages)
+        self.assertIn('requests', installed_packages)
+        self.assertIn('keyring', installed_packages)
