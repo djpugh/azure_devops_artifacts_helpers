@@ -55,7 +55,6 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="What&#39;s Changed" href="changelog.html" />
@@ -254,6 +253,13 @@
     <li class="md-nav__item">
     
     
+      <a href="changelog.html#release-1-0-8" class="md-nav__link">1.0.8</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
       <a href="changelog.html#release-1-0-7" class="md-nav__link">1.0.7</a>
       
     
@@ -361,15 +367,15 @@
 <h1 id="usage--page-root">Using azure_devops_artifacts_helpers<a class="headerlink" href="#usage--page-root" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://pypi.org/project/azure_devops_artifacts_helpers">azure_devops_artifacts_helpers</a> is an extension to <a class="reference external" href="https://pypi.org/project/virtualenv">virtualenv</a>. Once installed, you should see <code class="docutils literal notranslate"><span class="pre">azdo-pip</span></code>
 in the <code class="docutils literal notranslate"><span class="pre">--seeders</span></code> options when running <code class="docutils literal notranslate"><span class="pre">virtualenv</span> <span class="pre">--help</span></code>.</p>
-<p>To create a virtualenv with <code class="docutils literal notranslate"><span class="pre">artifacts-keyring==0.3.0</span></code> installed use:</p>
+<p>To create a virtualenv with <code class="docutils literal notranslate"><span class="pre">artifacts-keyring==0.3.1</span></code> installed use:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ virtualenv &lt;venv-name&gt; --seeders=azdo-pip
 </pre></div>
 </div>
 <p>There is also a tox plugin that can be included using the <code class="docutils literal notranslate"><span class="pre">tox</span></code> <code class="docutils literal notranslate"><span class="pre">requires</span></code> argument in <code class="docutils literal notranslate"><span class="pre">tox.ini</span></code></p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[tox]</span>
 <span class="na">envlist</span> <span class="o">=</span> <span class="s">...</span>
-<span class="na">requires</span> <span class="o">=</span><span class="s"></span>
-<span class="s">    azure_devops_artifacts_helpers</span>
+<span class="na">requires</span> <span class="o">=</span>
+    <span class="na">azure_devops_artifacts_helpers</span>
 
 <span class="na">...</span>
 </pre></div>
@@ -420,14 +426,14 @@ in the <code class="docutils literal notranslate"><span class="pre">--seeders</s
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2020 David Pugh.
+              &#169; Copyright 2021 David Pugh.
               
           </div>
             Last updated on
-              Dec 06, 2020 (version 1.0.7).
+              Feb 08, 2021 (version 1.0.8).
             <br/>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.3.1.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>
