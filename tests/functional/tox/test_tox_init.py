@@ -19,7 +19,9 @@ requires =
     azure_devops_artifacts_helpers
 [testenv:test]
 skip_install = True
-commands = pip freeze
+commands =
+   pip freeze
+   pip install pydantic --no-cache-dir
 """
     def setUp(self):
         self.td = tempfile.TemporaryDirectory()
