@@ -1,3 +1,3 @@
 artifacts-keyring==0.3.1
 importlib-metadata
-typing-extensions==3.10.*
+typing-extensions==4.1.*
