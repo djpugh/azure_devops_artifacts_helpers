@@ -178,7 +178,7 @@ jobs:
           pip install tox
       
       - name: Download collated wheels
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: wheels
       
@@ -211,7 +211,7 @@ jobs:
           pip install tox
 
       - name: Download collated wheels
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: wheels
       
@@ -259,7 +259,7 @@ jobs:
         with:
           python-version: ${{ matrix.py }}
       - name: Download build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: dist
@@ -310,7 +310,7 @@ jobs:
       - name: Set up Python ${{ matrix.py }}
         uses: actions/setup-python@v2
       - name: Download build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: dist
@@ -336,7 +336,7 @@ jobs:
       - publish-package
     steps:
       - name: Download docs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: docs
           path: ./docs/html
