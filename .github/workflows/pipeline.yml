@@ -16,7 +16,7 @@ jobs:
     name: Lint
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python
         uses: actions/setup-python@v2
       - name: Install dependencies
@@ -44,7 +44,7 @@ jobs:
       max-parallel: 4
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.py }}
       uses: actions/setup-python@v2
       with:
@@ -60,7 +60,7 @@ jobs:
     - name: Run Test Suite
       run: tox -e test --skip-pkg-install
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v2
       with:
         directory: ./reports/
         flags: tests
@@ -79,7 +79,7 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: SonarCloud Scan
@@ -96,7 +96,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Run FOSSA scan and upload build data
         uses: fossa-contrib/fossa-action@v1
@@ -109,7 +109,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -134,7 +134,7 @@ jobs:
       max-parallel: 4
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v2
@@ -167,7 +167,7 @@ jobs:
         os:
           - windows
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           clean: true
       - name: Set up Python ${{ matrix.py }}
@@ -178,7 +178,7 @@ jobs:
           pip install tox
       
       - name: Download collated wheels
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: wheels
       
@@ -202,7 +202,7 @@ jobs:
       - collate-packages
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.py }}
         uses: actions/setup-python@v2
       - name: Install dependencies
@@ -211,7 +211,7 @@ jobs:
           pip install tox
 
       - name: Download collated wheels
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           path: wheels
       
@@ -251,7 +251,7 @@ jobs:
           - 3.9
       max-parallel: 4
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           path: ./repo
       - name: Set up Python ${{ matrix.py }}
@@ -259,7 +259,7 @@ jobs:
         with:
           python-version: ${{ matrix.py }}
       - name: Download build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: dist
@@ -284,7 +284,7 @@ jobs:
       - test-build
     steps:
       - name: automerge
-        uses: "pascalgn/automerge-action@v0.12.0"
+        uses: pascalgn/automerge-action@v0.15.2
         with:
           args: "--trace"
         env:
@@ -306,11 +306,11 @@ jobs:
       - codeql-analyze
       - test-build
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.py }}
         uses: actions/setup-python@v2
       - name: Download build
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build
           path: dist
@@ -336,7 +336,7 @@ jobs:
       - publish-package
     steps:
       - name: Download docs
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: docs
           path: ./docs/html
