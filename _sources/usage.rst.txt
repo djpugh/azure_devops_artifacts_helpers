@@ -7,7 +7,7 @@ in the ``--seeders`` options when running ``virtualenv --help``.
 
 To create a virtualenv with |artifacts_keyring_version| installed use::
 
-    $ virtualenv <venv-name> --seeders=azdo-pip
+    $ virtualenv <venv-name> --seeder=azdo-pip
 
 There is also a tox plugin that can be included using the ``tox`` ``requires`` argument in ``tox.ini``
 
