@@ -1,3 +1,4 @@
+"""Run as main."""
 from azure_devops_artifacts_helpers.cli import install
 
 if __name__ == "__main__":
