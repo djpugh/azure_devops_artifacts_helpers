@@ -29,3 +29,4 @@ __pycache__
 src/azure_devops_artifacts_helpers/wheels/*.whl
 Pipfile
 .coverage*
+Pipfile.lock
