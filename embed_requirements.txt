@@ -1,2 +1,1 @@
 artifacts-keyring>=0.3.2
-importlib-metadata
