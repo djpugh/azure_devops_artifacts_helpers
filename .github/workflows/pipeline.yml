@@ -274,7 +274,9 @@ jobs:
         run: |
           pip install $(ls -t dist/*.whl | head -n1)
           pip install -r ./repo/requirements.txt
-          pip install -U ${{ matrix.tox_version }} pytest setuptools
+          pip install -U pytest setuptools
+          echo "Installing ${{ matrix.tox_version }}"
+          pip install  ${{ matrix.tox_version }}
       - shell: bash
         run: pytest ./repo/tests/functional
 
