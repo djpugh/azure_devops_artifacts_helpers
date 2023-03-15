@@ -115,23 +115,14 @@ Submitting pull requests
 Submit pull requests against the ``main`` branch, providing a good description of what you're doing and why. You must
 have legal permission to distribute any code you contribute to ``azure_devops_artifacts_helpers`` and it must be available under the MIT
 License. Provide tests that cover your changes and run the tests locally first. ``azure_devops_artifacts_helpers``
-:ref:`supports <compatibility-requirements>` multiple Python versions. Any pull request must
-consider and work on all these platforms.
+supports multiple Python (and tox) versions. Any pull request must consider and work on all these platforms.
 
-Pull Requests should be small to facilitate review. Keep them self-contained, and limited in scope. `Studies have shown
-<https://www.kessler.de/prd/smartbear/BestPracticesForPeerCodeReview.pdf>`_ that review quality falls off as patch size
-grows. Sometimes this will result in many small PRs to land a single large feature. In particular, pull requests must
-not be treated as "feature branches", with ongoing development work happening within the PR. Instead, the feature should
-be broken up into smaller, independent parts which can be reviewed and merged individually.
-
-Additionally, avoid including "cosmetic" changes to code that is unrelated to your change, as these make reviewing the
+Pull Requests should be small to facilitate review, avoid including "cosmetic" changes to code that is unrelated to your change, as these make reviewing the
 PR more difficult. Examples include re-flowing text in comments or documentation, or addition or removal of blank lines
 or whitespace within lines. Such changes can be made separately, as a "formatting cleanup" PR, if needed.
 
 Automated testing
 ~~~~~~~~~~~~~~~~~
 
-All pull requests and merges to ``main`` branch are tested using
-Github actions (configured by ``.github/workflows/pipeline.yml`` file. You can find the status and results to the CI runs for your
-PR on GitHub's Web UI for the pull request. You can also find links to the CI services' pages for the specific builds in
-the form of "Details" links, in case the CI run fails and you wish to view the output.
+All pull requests and merges to ``main`` branch are tested using Github actions (configured by ``.github/workflows/pipeline.yml`` file. You can find the status and results to the CI runs for your
+PR on GitHub's Web UI for the pull request.

@@ -58,7 +58,7 @@ extlinks = {
     "issue": ("https://github.com/djpugh/azure_devops_artifacts_helpers/issues/%s", "#"),
     "pull": ("https://github.com/djpugh/azure_devops_artifacts_helpers/pull/%s", "PR #"),
     "user": ("https://github.com/%s", "@"),
-    "pypi": ("https://pypi.org/project/%s", ""),
+    "pypi": ("https://pypi.org/project/%s", None),
 }
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -109,7 +109,7 @@ default_role = ':any:'
 rst_epilog = f"""
 .. role:: latex(raw)
    :format: latex
-   
+
 .. |artifacts_keyring_version| replace:: {artifacts_keyring_version}
 """
 # If true, the current module name will be prepended to all description
