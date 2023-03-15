@@ -4,7 +4,7 @@
 <html lang="English">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -53,9 +53,8 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/material.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="What&#39;s Changed" href="changelog.html" />
@@ -238,6 +237,13 @@
     
       <a href="changelog.html" class="md-nav__link">Release Information</a>
       <ul class="md-nav__list"> 
+    <li class="md-nav__item">
+    
+    
+      <a href="changelog.html#release-1-1-0" class="md-nav__link">1.1.0</a>
+      
+    
+    </li>
     <li class="md-nav__item">
     
     
@@ -440,9 +446,9 @@
           <article class="md-content__inner md-typeset" role="main">
             
   <section id="development">
-<h1 id="development--page-root">Development<a class="headerlink" href="#development--page-root" title="Permalink to this headline">¶</a></h1>
+<h1 id="development--page-root">Development<a class="headerlink" href="#development--page-root" title="Permalink to this heading">¶</a></h1>
 <section id="getting-started">
-<h2 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<h2 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permalink to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> is a volunteer maintained open source project and we welcome contributions of all forms. The sections
 below will help you get started with development, testing, and documentation. We’re pleased that you are interested in
 working on <code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code>. This document is meant to get you setup to work on <code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> and to act as a guide and reference
@@ -450,8 +456,8 @@ to the development setup. If you face any issues during this process, please
 <a class="reference external" href="https://github.com/djpugh/azure_devops_artifacts_helpers/issues/new?title=Trouble+with+development+environment">open an issue</a> about it on
 the issue tracker.</p>
 <section id="setup">
-<h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> is an extension to <a class="reference external" href="https://pypi.org/project/virtualenv">virtualenv</a>, written in Python. To work on it, you'll need:</p>
+<h3 id="setup">Setup<a class="headerlink" href="#setup" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> is an extension to <a class="reference external" href="https://pypi.org/project/virtualenv">https://pypi.org/project/virtualenv</a>, written in Python. To work on it, you'll need:</p>
 <ul>
 <li><dl class="simple">
 <dt><strong>Source code</strong>: available on <a class="reference external" href="https://github.com/djpugh/azure_devops_artifacts_helpers">GitHub</a>. You can use <code class="docutils literal notranslate"><span class="pre">git</span></code> to clone the</dt><dd><p>repository:</p>
@@ -464,11 +470,11 @@ the issue tracker.</p>
 </li>
 <li><p><strong>Python interpreter</strong>: We recommend using <code class="docutils literal notranslate"><span class="pre">CPython</span></code>. You can use
 <a class="reference external" href="https://realpython.com/installing-python/">this guide</a> to set it up.</p></li>
-<li><p><a class="reference external" href="https://pypi.org/project/tox">tox</a>: to automatically get the projects development dependencies and run the test suite.</p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/tox">https://pypi.org/project/tox</a>: to automatically get the projects development dependencies and run the test suite.</p></li>
 </ul>
 </section>
 <section id="running-from-source-tree">
-<h3 id="running-from-source-tree">Running from source tree<a class="headerlink" href="#running-from-source-tree" title="Permalink to this headline">¶</a></h3>
+<h3 id="running-from-source-tree">Running from source tree<a class="headerlink" href="#running-from-source-tree" title="Permalink to this heading">¶</a></h3>
 <p>The easiest way to do this is to generate the development tox environment, and then invoke <code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> from under the
 <code class="docutils literal notranslate"><span class="pre">.venv</span></code> folder</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">tox -e dev</span>
@@ -477,8 +483,8 @@ the issue tracker.</p>
 </div>
 </section>
 <section id="populating-wheels">
-<h3 id="populating-wheels">Populating wheels<a class="headerlink" href="#populating-wheels" title="Permalink to this headline">¶</a></h3>
-<p>Due to challenges with <a class="reference external" href="https://pypi.org/project/pip">pip</a> <code class="docutils literal notranslate"><span class="pre">download</span></code>, the full set of wheels is popualated at build time based on the provided <code class="docutils literal notranslate"><span class="pre">embed_requirements.txt</span></code>.
+<h3 id="populating-wheels">Populating wheels<a class="headerlink" href="#populating-wheels" title="Permalink to this heading">¶</a></h3>
+<p>Due to challenges with <a class="reference external" href="https://pypi.org/project/pip">https://pypi.org/project/pip</a> <code class="docutils literal notranslate"><span class="pre">download</span></code>, the full set of wheels is popualated at build time based on the provided <code class="docutils literal notranslate"><span class="pre">embed_requirements.txt</span></code>.
 When developing locally (and e.g. for testing locally), it's necessary to populate the wheels for that platform. The easiest way to do this is using
 <code class="docutils literal notranslate"><span class="pre">tox</span></code></p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">tox -e populate</span>
@@ -486,18 +492,18 @@ When developing locally (and e.g. for testing locally), it's necessary to popula
 </div>
 </section>
 <section id="running-tests">
-<h3 id="running-tests">Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> tests are written using the <a class="reference external" href="https://pypi.org/project/pytest">pytest</a> test framework. <a class="reference external" href="https://pypi.org/project/tox">tox</a> is used to automate the setup
+<h3 id="running-tests">Running tests<a class="headerlink" href="#running-tests" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> tests are written using the <a class="reference external" href="https://pypi.org/project/pytest">https://pypi.org/project/pytest</a> test framework. <a class="reference external" href="https://pypi.org/project/tox">https://pypi.org/project/tox</a> is used to automate the setup
 and execution of <code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> tests. This requires populating the wheels (see above).</p>
 <p>To run tests locally execute:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">tox -e test</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">tox -e test-v3,test-v4</span>
 </pre></div>
 </div>
 <p>This will run the test suite for the same Python version as under which <code class="docutils literal notranslate"><span class="pre">tox</span></code> is installed.</p>
 </section>
 <section id="running-linters">
-<h3 id="running-linters">Running linters<a class="headerlink" href="#running-linters" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> uses <a class="reference external" href="https://pypi.org/project/flake8">flake8</a> and extensions for managing linting of the codebase. <code class="docutils literal notranslate"><span class="pre">flake8</span></code> performs various checks on all
+<h3 id="running-linters">Running linters<a class="headerlink" href="#running-linters" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> uses <a class="reference external" href="https://pypi.org/project/flake8">https://pypi.org/project/flake8</a> and extensions for managing linting of the codebase. <code class="docutils literal notranslate"><span class="pre">flake8</span></code> performs various checks on all
 files in <code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> and uses tools that help follow a consistent code style within the codebase. To use linters locally,
 run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">tox -e lint</span>
@@ -510,8 +516,8 @@ run:</p>
 </div>
 </section>
 <section id="building-documentation">
-<h3 id="building-documentation">Building documentation<a class="headerlink" href="#building-documentation" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> documentation is built using <a class="reference external" href="https://pypi.org/project/Sphinx">Sphinx</a>. The documentation is written in reStructuredText. To build it
+<h3 id="building-documentation">Building documentation<a class="headerlink" href="#building-documentation" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> documentation is built using <a class="reference external" href="https://pypi.org/project/Sphinx">https://pypi.org/project/Sphinx</a>. The documentation is written in reStructuredText. To build it
 locally, run:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">tox -e docs</span>
 </pre></div>
@@ -520,33 +526,26 @@ locally, run:</p>
 that folder.</p>
 </section>
 <section id="release">
-<h3 id="release">Release<a class="headerlink" href="#release" title="Permalink to this headline">¶</a></h3>
-<p>We release after new <a class="reference external" href="https://pypi.org/project/virtualenv">virtualenv</a> and <a class="reference external" href="https://pypi.org/project/artifacts-keyring">artifacts-keyring</a> releases to confirm that our extensions are still working.</p>
+<h3 id="release">Release<a class="headerlink" href="#release" title="Permalink to this heading">¶</a></h3>
+<p>We release after new <a class="reference external" href="https://pypi.org/project/virtualenv">https://pypi.org/project/virtualenv</a> and <a class="reference external" href="https://pypi.org/project/artifacts-keyring">https://pypi.org/project/artifacts-keyring</a> releases to confirm that our extensions are still working.</p>
 </section>
 </section>
 <section id="contributing">
-<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
+<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permalink to this heading">¶</a></h2>
 <section id="submitting-pull-requests">
-<h3 id="submitting-pull-requests">Submitting pull requests<a class="headerlink" href="#submitting-pull-requests" title="Permalink to this headline">¶</a></h3>
-<p>Submit pull requests against the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch, providing a good description of what you're doing and why. You must
+<h3 id="submitting-pull-requests">Submitting pull requests<a class="headerlink" href="#submitting-pull-requests" title="Permalink to this heading">¶</a></h3>
+<p>Submit pull requests against the <code class="docutils literal notranslate"><span class="pre">main</span></code> branch, providing a good description of what you're doing and why. You must
 have legal permission to distribute any code you contribute to <code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> and it must be available under the MIT
 License. Provide tests that cover your changes and run the tests locally first. <code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code>
-<span class="xref std std-ref">supports</span> multiple Python versions. Any pull request must
-consider and work on all these platforms.</p>
-<p>Pull Requests should be small to facilitate review. Keep them self-contained, and limited in scope. <a class="reference external" href="https://www.kessler.de/prd/smartbear/BestPracticesForPeerCodeReview.pdf">Studies have shown</a> that review quality falls off as patch size
-grows. Sometimes this will result in many small PRs to land a single large feature. In particular, pull requests must
-not be treated as "feature branches", with ongoing development work happening within the PR. Instead, the feature should
-be broken up into smaller, independent parts which can be reviewed and merged individually.</p>
-<p>Additionally, avoid including "cosmetic" changes to code that is unrelated to your change, as these make reviewing the
+supports multiple Python (and tox) versions. Any pull request must consider and work on all these platforms.</p>
+<p>Pull Requests should be small to facilitate review, avoid including "cosmetic" changes to code that is unrelated to your change, as these make reviewing the
 PR more difficult. Examples include re-flowing text in comments or documentation, or addition or removal of blank lines
 or whitespace within lines. Such changes can be made separately, as a "formatting cleanup" PR, if needed.</p>
 </section>
 <section id="automated-testing">
-<h3 id="automated-testing">Automated testing<a class="headerlink" href="#automated-testing" title="Permalink to this headline">¶</a></h3>
-<p>All pull requests and merges to <code class="docutils literal notranslate"><span class="pre">master</span></code> branch are tested using
-Github actions (configured by <code class="docutils literal notranslate"><span class="pre">.github/workflows/pipeline.yml</span></code> file. You can find the status and results to the CI runs for your
-PR on GitHub's Web UI for the pull request. You can also find links to the CI services' pages for the specific builds in
-the form of "Details" links, in case the CI run fails and you wish to view the output.</p>
+<h3 id="automated-testing">Automated testing<a class="headerlink" href="#automated-testing" title="Permalink to this heading">¶</a></h3>
+<p>All pull requests and merges to <code class="docutils literal notranslate"><span class="pre">main</span></code> branch are tested using Github actions (configured by <code class="docutils literal notranslate"><span class="pre">.github/workflows/pipeline.yml</span></code> file. You can find the status and results to the CI runs for your
+PR on GitHub's Web UI for the pull request.</p>
 </section>
 </section>
 </section>
@@ -583,14 +582,14 @@ the form of "Details" links, in case the CI run fails and you wish to view the o
       <div class="md-footer-meta__inner md-grid">
         <div class="md-footer-copyright">
           <div class="md-footer-copyright__highlight">
-              &#169; Copyright 2022 David Pugh.
+              &#169; Copyright 2023 David Pugh.
               
           </div>
             Last updated on
-              Apr 17, 2022 (version 1.0.10).
+              Mar 15, 2023 (version 1.1.0).
             <br/>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.5.0.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>
