@@ -39,7 +39,7 @@ def uninstall(python, pip_args):
     """Azure devops artifacts uninstall artfacts keyring."""
     # Uninstall it and use the source dir
     for pkg in EXT_DIR.glob('artifacts_keyring*.whl'):
-        args = [python, '-m', 'pip', 'uninstall', '-y', pkg] + list(pip_args)
+        args = [python, '-m', 'pip', 'uninstall', '-y', str(pkg)] + list(pip_args)
         print(args)
         subprocess.check_call(args)
         return
