@@ -21,11 +21,12 @@ def main():
 
 @main.command(context_settings=dict(ignore_unknown_options=True))
 @click.argument('pip_args', nargs=-1, type=click.UNPROCESSED)
-def install(pip_args):
+@click.option('--python', default=sys.executable)
+def install(python, pip_args):
     """Azure devops artifacts install artfacts keyring."""
     for pkg in EXT_DIR.glob('artifacts_keyring*.whl'):
         # Install it and use the source dir
-        args = [sys.executable, '-m', 'pip', 'install', str(pkg), '--find-links', f'file://{str(EXT_DIR.as_posix())}']+list(pip_args)
+        args = [python, '-m', 'pip', 'install', str(pkg), '--find-links', f'file://{str(EXT_DIR.as_posix())}']+list(pip_args)
         print(args)
         subprocess.check_call(args)
         return
@@ -33,15 +34,16 @@ def install(pip_args):
 
 @main.command(context_settings=dict(ignore_unknown_options=True))
 @click.argument('pip_args', nargs=-1, type=click.UNPROCESSED)
-def uninstall(pip_args):
+@click.option('--python', default=sys.executable)
+def uninstall(python, pip_args):
     """Azure devops artifacts uninstall artfacts keyring."""
     # Uninstall it and use the source dir
     for pkg in EXT_DIR.glob('artifacts_keyring*.whl'):
-        args = [sys.executable, '-m', 'pip', 'uninstall', pkg] + list(pip_args)
+        args = [python, '-m', 'pip', 'uninstall', '-y', pkg] + list(pip_args)
         print(args)
         subprocess.check_call(args)
         return
 
 
 if __name__ == "__main__":
-    install()
+    main()
