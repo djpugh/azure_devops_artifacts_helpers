@@ -20,8 +20,8 @@ requires =
 [testenv:test]
 skip_install = True
 commands =
-   pip freeze
-   pip install pydantic --no-cache-dir
+    pip install pydantic --no-cache-dir
+    pip freeze
 """
     def setUp(self):
         self.td = tempfile.TemporaryDirectory()

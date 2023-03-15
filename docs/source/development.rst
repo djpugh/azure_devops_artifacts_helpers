@@ -66,7 +66,7 @@ To run tests locally execute:
 
 .. code-block:: console
 
-    tox -e test
+    tox -e test-v3,test-v4
 
 This will run the test suite for the same Python version as under which ``tox`` is installed.
 
@@ -104,7 +104,7 @@ that folder.
 Release
 ~~~~~~~
 
-We release after new :pypi:`virtualenv` and :pypi:`artifacts-keyring` releases to confirm that our extensions are still working. 
+We release after new :pypi:`virtualenv` and :pypi:`artifacts-keyring` releases to confirm that our extensions are still working.
 
 Contributing
 -------------
@@ -112,7 +112,7 @@ Contributing
 Submitting pull requests
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Submit pull requests against the ``master`` branch, providing a good description of what you're doing and why. You must
+Submit pull requests against the ``main`` branch, providing a good description of what you're doing and why. You must
 have legal permission to distribute any code you contribute to ``azure_devops_artifacts_helpers`` and it must be available under the MIT
 License. Provide tests that cover your changes and run the tests locally first. ``azure_devops_artifacts_helpers``
 :ref:`supports <compatibility-requirements>` multiple Python versions. Any pull request must
@@ -131,7 +131,7 @@ or whitespace within lines. Such changes can be made separately, as a "formattin
 Automated testing
 ~~~~~~~~~~~~~~~~~
 
-All pull requests and merges to ``master`` branch are tested using
+All pull requests and merges to ``main`` branch are tested using
 Github actions (configured by ``.github/workflows/pipeline.yml`` file. You can find the status and results to the CI runs for your
 PR on GitHub's Web UI for the pull request. You can also find links to the CI services' pages for the specific builds in
 the form of "Details" links, in case the CI run fails and you wish to view the output.
