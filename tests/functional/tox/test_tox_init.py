@@ -20,8 +20,8 @@ requires =
 [testenv:test]
 skip_install = True
 commands =
-   pip freeze
-   pip install pydantic --no-cache-dir
+    pip install pydantic --no-cache-dir
+    pip freeze
 """
     def setUp(self):
         self.td = tempfile.TemporaryDirectory()
@@ -29,7 +29,7 @@ commands =
     def tearDown(self):
         try:
             self.td.cleanup()
-        except PermissionError:
+        except (PermissionError, RecursionError):
             pass
 
     def test_tox(self):
