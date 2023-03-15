@@ -29,7 +29,7 @@ commands =
     def tearDown(self):
         try:
             self.td.cleanup()
-        except PermissionError:
+        except (PermissionError, RecursionError):
             pass
 
     def test_tox(self):
