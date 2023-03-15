@@ -249,15 +249,14 @@ jobs:
           - windows
           - macos
         py:
-          - 3.6
           - 3.7
           - 3.8
           - 3.9
           - "3.10"
           - 3.11
         tox_version:
-          - "<4.0.0"
-          - ">=4.0.0"
+          - "tox<4.0.0"
+          - "tox>=4.0.0"
     steps:
       - uses: actions/checkout@v3
         with:
@@ -275,7 +274,7 @@ jobs:
         run: |
           pip install $(ls -t dist/*.whl | head -n1)
           pip install -r ./repo/requirements.txt
-          pip install -U tox${{ matrix.tox_version }} pytest setuptools
+          pip install -U ${{ matrix.tox_version }} pytest setuptools
       - shell: bash
         run: pytest ./repo/tests/functional
 
