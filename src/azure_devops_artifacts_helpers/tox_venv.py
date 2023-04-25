@@ -19,6 +19,8 @@ if tox:
     if tox_v4:
         from tox.plugin import impl
         from tox.tox_env.api import ToxEnv
+        from tox.config.sets import EnvConfigSet
+        from tox.session.state import State
 
         def tox_testenv_create(venv, action):
             """Empty method if tox v4 installed."""
@@ -26,7 +28,16 @@ if tox:
         @impl
         def tox_on_install(tox_env: ToxEnv, arguments: Any, section: str, of_type: str) -> None:  # noqa: U100
             """Called before executing an installation command to install artifacts keyring."""
-            tox_env.installer.install([Requirement('artifacts-keyring')], tox_env.__class__.__name__, 'pre_deps')
+            if tox_env.conf.load('azure_devops_artifacts_helpers'):
+                tox_env.installer.install([Requirement('artifacts-keyring')], tox_env.__class__.__name__, 'pre_deps')
+
+        @impl
+        def tox_add_env_config(env_conf: EnvConfigSet, state: State):
+            env_conf.add_config(keys='azure_devops_artifacts_helpers',
+                                of_type=bool,
+                                default=True,
+                                desc='Use Azure Devops Artifacts Helpers to seed env')
+
 
     else:
         from tox.venv import cleanup_for_venv, _SKIP_VENV_CREATION, reporter
@@ -70,9 +81,16 @@ if tox:
         def tox_on_install(venv, action):
             """Empty method if tox v3 installed."""
 
+        def tox_add_env_config(env_conf, state):
+            """Empty method if tox v3 installed."""
+
+
 else:  # pragma: no cover
     def tox_testenv_create(venv, action):
         """Empty method if tox not installed."""
 
     def tox_on_install(venv, action):
+        """Empty method if tox not installed."""
+
+    def tox_add_env_config(env_conf, state):
         """Empty method if tox not installed."""

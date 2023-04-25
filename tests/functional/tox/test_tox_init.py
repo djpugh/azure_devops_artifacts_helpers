@@ -4,6 +4,11 @@ import subprocess
 import sys
 import unittest
 
+import tox
+try:
+    tox_v4 = tox.version.version_tuple[0] > 3
+except AttributeError:
+    tox_v4 = False  # Version 3
 
 TOX_INI = 'tox.ini'
 
@@ -23,6 +28,22 @@ commands =
     pip install pydantic --no-cache-dir
     pip freeze
 """
+
+    @property
+    def tox_ini_no(self):
+        return """
+[tox]
+envlist = {test}
+requires =
+    azure_devops_artifacts_helpers
+[testenv:test]
+azure_devops_artifacts_helpers = False
+skip_install = True
+commands =
+    pip install pydantic --no-cache-dir
+    pip freeze
+"""
+
     def setUp(self):
         self.td = tempfile.TemporaryDirectory()
 
@@ -47,3 +68,17 @@ commands =
         self.assertIn('artifacts-keyring', tox_output)
         self.assertIn('requests', tox_output)
         self.assertIn('keyring', tox_output)
+
+    @unittest.skipIf(not tox_v4, "Not tox v4")
+    def test_tox_no(self):
+        with open(str(Path(self.td.name)/TOX_INI), 'w') as f:
+            f.write(self.tox_ini_no)
+        tox_output = subprocess.check_output([sys.executable, '-m', 'tox', '-vv', '-c', str(Path(self.td.name)/TOX_INI), '--workdir', self.td.name]).decode()
+        self.assertNotIn('artifacts-keyring', tox_output)
+
+    @unittest.skipIf(not tox_v4, "Not tox v4")
+    def test_tox_extra_args_no(self):
+        with open(str(Path(self.td.name)/TOX_INI), 'w') as f:
+            f.write(self.tox_ini_no)
+        tox_output = subprocess.check_output([sys.executable, '-m', 'tox', '-vv', '-c', str(Path(self.td.name)/TOX_INI), '--workdir', self.td.name, '--sitepackages', '--alwayscopy']).decode()
+        self.assertNotIn('artifacts-keyring', tox_output)
