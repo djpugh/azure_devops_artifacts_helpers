@@ -33,11 +33,11 @@ if tox:
 
         @impl
         def tox_add_env_config(env_conf: EnvConfigSet, state: State):
+            """Add environment config option for ignoring/skipping azure_devops_artifacts_helpers install."""
             env_conf.add_config(keys='azure_devops_artifacts_helpers',
                                 of_type=bool,
                                 default=True,
                                 desc='Use Azure Devops Artifacts Helpers to seed env')
-
 
     else:
         from tox.venv import cleanup_for_venv, _SKIP_VENV_CREATION, reporter
