@@ -102,7 +102,7 @@ if tox:
             for env in config.envlist:
                 value = not getattr(config.option, f'disable_{PARAM.replace("-", "_")}')
                 try:
-                    value &= bool(config.envconfigs[env]._reader.getargv(PARAM.replace('-', '_'), 'True'))
+                    value &= config.envconfigs[env]._reader.getbool(PARAM.replace('-', '_'), True)
                 except AttributeError:
                     value &= True
                 setattr(config.envconfigs[env], PARAM.replace('-', '_'), value)
