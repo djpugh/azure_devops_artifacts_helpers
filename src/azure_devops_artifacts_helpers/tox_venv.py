@@ -2,8 +2,6 @@
 import sys
 from typing import Any
 
-from packaging.requirements import Requirement
-
 from azure_devops_artifacts_helpers.seed import EXT_DIR
 
 try:
@@ -32,7 +30,6 @@ if tox:
             #    -f EXT_DIR --no-index
             # This makes pip look in the bundled wheel dir, and not use the index
             tox_env.installer._execute_installer(['artifacts-keyring', '-f', EXT_DIR, '--no-index'], 'pre_deps')
-
 
     else:
         from tox.venv import cleanup_for_venv, _SKIP_VENV_CREATION, reporter
