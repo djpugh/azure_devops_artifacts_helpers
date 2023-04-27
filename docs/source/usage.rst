@@ -22,3 +22,6 @@ There is also a tox plugin that can be included using the ``tox`` ``requires`` a
 
 Which will enforce installing it and therefore enable ``artifacts-keyring`` and its dependencies to be installed in any new tox env.
 (for tox v3 this uses the ``tox_testenv_create`` hook, for v4, this hook no longer exists, but instead the more convenient ``tox_on_install`` hook is used)
+
+This can be controlled using the ``azure_devops_artifacts_helpers`` config option, which can be set to ``True`` or ``False`` (defaults to ``True``),
+to select whether or not it is used in that environment, or the ``--disable-azure-devops-artifacts-helpers`` command line option can be used to stop installation when invoking tox.
