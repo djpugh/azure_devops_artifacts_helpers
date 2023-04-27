@@ -2,7 +2,7 @@
 import sys
 from typing import Any
 
-from packaging.requirements import Requirement
+from azure_devops_artifacts_helpers.seed import EXT_DIR
 
 try:
     import tox
@@ -36,7 +36,10 @@ if tox:
         def tox_on_install(tox_env: ToxEnv, arguments: Any, section: str, of_type: str) -> None:  # noqa: U100
             """Called before executing an installation command to install artifacts keyring."""
             if tox_env.conf.load(PARAM.replace("-", "_")) and not getattr(tox_env.options, f'disable_{PARAM.replace("-", "_")}'):
-                tox_env.installer.install([Requirement('artifacts-keyring')], tox_env.__class__.__name__, 'pre_deps')
+                # To force install from the bundled wheels, we use the following pip flags:
+                #    -f EXT_DIR --no-index
+                # This makes pip look in the bundled wheel dir, and not use the index
+                tox_env.installer._execute_installer(['artifacts-keyring', '-f', EXT_DIR, '--no-index'], 'pre_deps')
 
         @impl
         def tox_add_env_config(env_conf: EnvConfigSet, state: State):
