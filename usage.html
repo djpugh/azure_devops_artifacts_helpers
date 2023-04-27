@@ -253,6 +253,13 @@
     <li class="md-nav__item">
     
     
+      <a href="changelog.html#release-1-2-0" class="md-nav__link">1.2.0</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
       <a href="changelog.html#release-1-1-0" class="md-nav__link">1.1.0</a>
       
     
@@ -403,6 +410,8 @@ in the <code class="docutils literal notranslate"><span class="pre">--seeders</s
 </div>
 <p>Which will enforce installing it and therefore enable <code class="docutils literal notranslate"><span class="pre">artifacts-keyring</span></code> and its dependencies to be installed in any new tox env.
 (for tox v3 this uses the <code class="docutils literal notranslate"><span class="pre">tox_testenv_create</span></code> hook, for v4, this hook no longer exists, but instead the more convenient <code class="docutils literal notranslate"><span class="pre">tox_on_install</span></code> hook is used)</p>
+<p>This can be controlled using the <code class="docutils literal notranslate"><span class="pre">azure_devops_artifacts_helpers</span></code> config option, which can be set to <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>),
+to select whether or not it is used in that environment, or the <code class="docutils literal notranslate"><span class="pre">--disable-azure-devops-artifacts-helpers</span></code> command line option can be used to stop installation when invoking tox.</p>
 </section>
 
 
@@ -452,10 +461,10 @@ in the <code class="docutils literal notranslate"><span class="pre">--seeders</s
               
           </div>
             Last updated on
-              Mar 15, 2023 (version 1.1.0).
+              Apr 27, 2023 (version 1.2.0).
             <br/>
             Created using
-            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.1.3.
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 6.2.1.
              and
             <a href="https://github.com/bashtage/sphinx-material/">Material for
               Sphinx</a>
