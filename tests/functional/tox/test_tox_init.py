@@ -39,6 +39,11 @@ commands =
         self.assertIn('artifacts-keyring', tox_output)
         self.assertIn('requests', tox_output)
         self.assertIn('keyring', tox_output)
+        # Test local install
+        self.assertIn('python -I -m pip install artifacts-keyring -f', tox_output)
+        self.assertIn('Looking in links', tox_output)
+        self.assertNotIn('Downloading artifacts-keyring', tox_output)
+        print(tox_output)
 
     def test_tox_extra_args(self):
         with open(str(Path(self.td.name)/TOX_INI), 'w') as f:
@@ -47,3 +52,8 @@ commands =
         self.assertIn('artifacts-keyring', tox_output)
         self.assertIn('requests', tox_output)
         self.assertIn('keyring', tox_output)
+        # Test local install
+        self.assertIn('python -I -m pip install artifacts-keyring -f', tox_output)
+        self.assertIn('Looking in links', tox_output)
+        self.assertNotIn('Downloading artifacts-keyring', tox_output)
+        print(tox_output)
