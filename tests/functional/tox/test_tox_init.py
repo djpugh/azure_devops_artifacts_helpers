@@ -9,10 +9,7 @@ try:
     tox_v4 = tox.version.version_tuple[0] > 3
 except AttributeError:
     tox_v4 = False  # Version 3
-<<<<<<< HEAD
-=======
 
->>>>>>> main
 
 TOX_INI = 'tox.ini'
 
