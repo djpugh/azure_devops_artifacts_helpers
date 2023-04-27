@@ -4,6 +4,12 @@ import subprocess
 import sys
 import unittest
 
+import tox
+try:
+    tox_v4 = tox.version.version_tuple[0] > 3
+except AttributeError:
+    tox_v4 = False  # Version 3
+
 
 TOX_INI = 'tox.ini'
 
@@ -39,6 +45,12 @@ commands =
         self.assertIn('artifacts-keyring', tox_output)
         self.assertIn('requests', tox_output)
         self.assertIn('keyring', tox_output)
+        if tox_v4:
+            # Test local install
+            self.assertIn('python -I -m pip install artifacts-keyring -f', tox_output)
+            self.assertIn('Looking in links', tox_output)
+            self.assertNotIn('Downloading artifacts-keyring', tox_output)
+        print(tox_output)
 
     def test_tox_extra_args(self):
         with open(str(Path(self.td.name)/TOX_INI), 'w') as f:
@@ -47,3 +59,9 @@ commands =
         self.assertIn('artifacts-keyring', tox_output)
         self.assertIn('requests', tox_output)
         self.assertIn('keyring', tox_output)
+        if tox_v4:
+            # Test local install
+            self.assertIn('python -I -m pip install artifacts-keyring -f', tox_output)
+            self.assertIn('Looking in links', tox_output)
+            self.assertNotIn('Downloading artifacts-keyring', tox_output)
+        print(tox_output)
