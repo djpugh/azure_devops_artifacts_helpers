@@ -51,6 +51,15 @@ if tox:
             """Add commandline option."""
             _add_option(parser)
 
+        def tox_testenv_create(venv, action):
+            """Empty method if tox v4 installed."""
+
+        def tox_addoption(parser):
+            """Empty method if tox v4 installed."""
+
+        def tox_configure(config):
+            """Empty method if tox v4 installed."""
+
     else:
         from tox.venv import cleanup_for_venv, _SKIP_VENV_CREATION, reporter
 
@@ -106,3 +115,28 @@ if tox:
                 except AttributeError:
                     value &= True
                 setattr(config.envconfigs[env], PARAM.replace('-', '_'), value)
+
+        def tox_add_env_config(env_conf, state):
+            """Empty method if tox v3 installed."""
+
+        def tox_add_option(parser):
+            """Empty method if tox v3 installed."""
+
+else:  # pragma: no cover
+    def tox_testenv_create(venv, action):
+        """Empty method if tox not installed."""
+
+    def tox_on_install(venv, action):
+        """Empty method if tox not installed."""
+
+    def tox_addoption(parser):
+        """Empty method if tox not installed."""
+
+    def tox_configure(config):
+        """Empty method if tox not installed."""
+
+    def tox_add_env_config(env_conf, state):
+        """Empty method if tox not installed."""
+
+    def tox_add_option(parser):
+        """Empty method if tox not installed."""
