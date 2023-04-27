@@ -99,10 +99,10 @@ if tox:
         @tox.hookimpl
         def tox_configure(config):
             """Set the config and process the cli option."""
-            value = not getattr(config.option, f'disable_{PARAM.replace("-", "_")}')
             for env in config.envlist:
+                value = not getattr(config.option, f'disable_{PARAM.replace("-", "_")}')
                 try:
-                    value &= config.envconfigs[env]._reader.getargv(PARAM.replace('-', '_'), True)
+                    value &= bool(config.envconfigs[env]._reader.getargv(PARAM.replace('-', '_'), 'True'))
                 except AttributeError:
                     value &= True
                 setattr(config.envconfigs[env], PARAM.replace('-', '_'), value)
