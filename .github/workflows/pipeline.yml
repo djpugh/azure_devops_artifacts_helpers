@@ -339,8 +339,17 @@ jobs:
         run: |
           tag_name=$(echo ${{github.ref}} | cut -d/ -f3)
           echo "::set-output name=tag_name::$tag_name"
+      - name: Check Tag doesn't exist
+        id: get_version
+        run: |
+          if git show-ref --tags docs-${{ steps.get_version.outputs.tag_name }} --quiet; then
+            echo "::set-output name=tag_exists::true"
+          else
+            echo "::set-output name=tag_exists::false"
+          fi
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
+        if: steps.get_version.outputs.tag_exists == false
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/html
