@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "tomli"]
+build-backend = "setuptools.build_meta"
+
+[tool.versioneer]
+VCS = "git"
+style = "pep440"
+versionfile_source = "src/azure_devops_artifacts_helpers/_version.py"
+versionfile_build = "azure_devops_artifacts_helpers/_version.py"
+tag_prefix = ""
+parentdir_prefix = "azure_devops_artifacts_helpers-"
+
+
+# https://pypi.org/project/poetry-dynamic-versioning/
+# https://github.com/python-versioneer/python-versioneer/blob/master/INSTALL.md
+# https://levelup.gitconnected.com/should-i-build-a-package-using-pep-517-and-how-a5bb15de1ccc
+# poetry?
+# plugin - https://python-poetry.org/docs/master/plugins/
+# Listen to COMMAND event and load as env var?
