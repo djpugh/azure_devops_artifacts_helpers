@@ -62,13 +62,13 @@ dev-lint = [
     "mypy"
 ]
 dev-test-v3 = [
-    "pytest",
-    "pytest-cov",
+    "pytest>=7.3.1",
+    "pytest-cov>=4",
     "tox<4.0.0"
     ]
 dev-test-v4 = [
-    "pytest",
-    "pytest-cov",
+    "pytest>=7.3.1",
+    "pytest-cov>=4",
     "tox>=4.0.0"
     ]
 dev-docs = [
@@ -92,9 +92,11 @@ documentation = "https://djpugh.github.io/azure_devops_artifacts_helpers"
 repository = "https://github.com/djpugh/azure_devops_artifacts_helpers"
 changelog = "https://djpugh.github.io/azure_devops_artifacts_helpers/changelog.html"
 
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.setuptools.package-data]
-"azure_devops_artifacts_helpers" = [
+"*" = [
     "*.rst",
     "*.ini",
     "*.toml",
@@ -106,17 +108,6 @@ write_to ="src/azure_devops_artifacts_helpers/_version.py"
 write_to_template = '__version__ = "{version}"'
 local_scheme = "node-and-date"
 
-[tool.coverage]
-html.show_contexts = true
-html.skip_covered = false
-paths.source = [
-  "src",
-]
-report.fail_under = 88
-run.parallel = true
-run.plugins = ["covdefaults"]
-
-
 [tool.mypy]
 python_version = "3.11"
 show_error_codes = true
@@ -124,6 +115,7 @@ strict = true
 overrides = [
   { module = [
     "virtualenv.*",
+    "tox.*"
   ], ignore_missing_imports = true },
 ]
 
@@ -171,14 +163,11 @@ exclude = [
     ".tox",
     "examples",
     "tests",
-    "versioneer.py",
     ".venv/*",
-    ".tox/*",
-    "src/azure_devops_artifacts_helpers/_version.py"
+    ".tox/*"
 ]
 show_source = true
 statistics = true
 application-import-names="azure_devops_artifacts_helpers"
 docstring-convention="google"
 import-order-style="google"
-

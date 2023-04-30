@@ -6,9 +6,12 @@ import sys
 print(sys.version_info, sys.executable)
 
 
-def run(env_name, extra, input_file):
-    _prep()
-    _install(_compile(env_name, extra, input_file))
+def run(env_name, extra, input_file, opts):
+    if opts:
+        subprocess.check_call([sys.executable, '-I', '-m', 'pip', 'install']+opts)
+    else:
+        _prep()
+        _install(_compile(env_name, extra, input_file), opts)
 
 def _prep():
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'pip-tools'])
@@ -22,12 +25,15 @@ def _compile(env_name, extras, input_file):
     subprocess.check_call(args)
     return output_file
 
-def _install(requirements_file):
+def _install(requirements_file, opts):
     print(f'Installing from compiled {requirements_file}')
     with open(requirements_file) as f:
         reqs = f.read()
     print(reqs)
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', requirements_file])
+    args = [sys.executable, '-m', 'pip', 'install', '-r', requirements_file]
+    if opts:
+        args += opts
+    subprocess.check_call(args)
     os.remove(requirements_file)
 
 if __name__ == "__main__":
@@ -35,5 +41,7 @@ if __name__ == "__main__":
     parser.add_argument('--env-name')
     parser.add_argument('--extras', default=None, nargs='*')
     parser.add_argument('--input-file', default='pyproject.toml')
-    args = parser.parse_args()
-    run(args.env_name, args.extras, args.input_file)
+    args, opts = parser.parse_known_args()
+    print (args, opts)
+    # Pass un expected args to the install step
+    run(args.env_name, args.extras, args.input_file, opts)

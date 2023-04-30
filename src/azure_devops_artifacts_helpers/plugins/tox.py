@@ -6,7 +6,7 @@ from azure_devops_artifacts_helpers import __name__, __package__
 from azure_devops_artifacts_helpers.seed import EXT_DIR
 
 try:
-    import tox  # type: ignore
+    import tox
 except ImportError:  # pragma: no cover
     tox = False
 
@@ -28,11 +28,11 @@ if tox:  # noqa: C901
         tox_v4 = False  # Version 3
 
     if tox_v4:
-        from tox.plugin import impl  # type: ignore
-        from tox.tox_env.api import ToxEnv  # type: ignore
-        from tox.config.cli.parser import ToxParser  # type: ignore
-        from tox.config.sets import EnvConfigSet  # type: ignore
-        from tox.session.state import State  # type: ignore
+        from tox.plugin import impl
+        from tox.tox_env.api import ToxEnv
+        from tox.config.cli.parser import ToxParser
+        from tox.config.sets import EnvConfigSet
+        from tox.session.state import State
 
         @impl  # type: ignore
         def tox_on_install(tox_env: ToxEnv, arguments: Any, section: str, of_type: str) -> None:  # noqa: U100
@@ -66,8 +66,8 @@ if tox:  # noqa: C901
             """Empty method if tox v4 installed."""
 
     else:
-        from tox.config import Parser, TestenvConfig  # type: ignore
-        from tox.venv import cleanup_for_venv, _SKIP_VENV_CREATION, reporter, VirtualEnv  # type: ignore
+        from tox.config import Parser, TestenvConfig
+        from tox.venv import cleanup_for_venv, _SKIP_VENV_CREATION, reporter, VirtualEnv
 
         @tox.hookimpl  # type: ignore
         def tox_testenv_create(venv: VirtualEnv, action: str) -> bool:
