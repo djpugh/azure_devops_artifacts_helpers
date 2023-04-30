@@ -50,7 +50,7 @@ tox = [
     ]
 dev = [
     "setuptools_scm[toml]",
-    "importlib_metadata; python<3.8"
+    'importlib_metadata; python_version < "3.8"'
 ]
 dev-lint = [
     "flake8>=5.0.4",
