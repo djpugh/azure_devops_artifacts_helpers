@@ -11,7 +11,7 @@ description = "Bootstrap using Private Azure Devops Artifacts Feeds as an index-
 readme = {file="README.rst", content-type = "text/x-rst"}
 keywords = ['Azure Devops', 'Azure Artifacts']
 license = { file = "LICENSE" }
-requires-python = '>=3.7,<=3.11'
+requires-python = '>=3.7,<3.12'
 classifiers = [
         "Environment :: Console",
         "Topic :: Software Development :: Libraries :: Python Modules",
