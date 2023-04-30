@@ -16,43 +16,43 @@ jobs:
     name: Changed Files
     steps:
     - name: Get changed files in the src folder
-        id: src-changed
-        uses: tj-actions/changed-files@v35
-        with:
-          files: src/**
+      id: src-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: src/**
     - name: Get changed files in the tests folder
-        id: tests-changed
-        uses: tj-actions/changed-files@v35
-        with:
-          files: tests/**
+      id: tests-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: tests/**
     - name: Get changed files in the root folder
-        id: root-changed
-        uses: tj-actions/changed-files@v35
-        with:
-          files: |
+      id: root-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: |
             *.{toml,ini,.gitignore}
             tools/**
     - name: Get changed files in the docs folder
-        id: docs-changed
-        uses: tj-actions/changed-files@v35
-        with:
-          files: docs/**
+      id: docs-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: docs/**
     - name: Get changed files in the workflows folder
-        id: workflows-changed
-        uses: tj-actions/changed-files@v35
-        with:
-          files: .github/workflows/**
+      id: workflows-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: .github/workflows/**
     - name: Get changed files in the .github folder
-        id: tools-changed
-        uses: tj-actions/changed-files@v35
-        with:
-          files: .github/*.{json,properties}
+      id: tools-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: .github/*.{json,properties}
     outputs:
-      src steps.src-changed.outputs.any_changed
-      tests steps.tests-changed.outputs.any_changed
-      config steps.root-changed.outputs.any_changed
-      tools steps.tools-changed.outputs.any_changed
-      workflows steps.workflows-changed.outputs.any_changed
+      src: ${{ steps.src-changed.outputs.any_changed }}
+      tests: ${{ steps.tests-changed.outputs.any_changed }}
+      config: ${{ steps.root-changed.outputs.any_changed }}
+      tools: ${{ steps.tools-changed.outputs.any_changed }}
+      workflows: ${{ steps.workflows-changed.outputs.any_changed }}
 
 
   lint:
