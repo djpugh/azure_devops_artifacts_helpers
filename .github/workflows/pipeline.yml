@@ -63,7 +63,7 @@ jobs:
     if: >
       (needs.changes.src == 'true' || needs.changes.tools == 'true' || needs.changes.config== 'true') ||
       (github.event_name == 'pull_request' ) ||
-      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main')) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
       (github.event_name == 'release')
     steps:
       - uses: actions/checkout@v3
