@@ -1,3 +1,0 @@
-virtualenv>=20.14.1
-click>=7.1.2
-pluggy

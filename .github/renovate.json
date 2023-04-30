@@ -4,9 +4,6 @@
         ":preserveSemverRanges"
     ],
     "labels": ["chore"],
-    "pip_requirements": {
-        "fileMatch": ["embed_requirements.txt", "requirements.txt"]
-    },
     "packageRules": [
         {
         "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
@@ -14,4 +11,5 @@
         "automergeStrategy": "squash"
         }
     ]
+
 }

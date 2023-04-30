@@ -1,4 +1,3 @@
 """Package containing virtualenv helpers for installing artifacts-keyring."""
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
+from azure_devops_artifacts_helpers._get_version import get_version
+__version__ = get_version()

@@ -25,3 +25,7 @@ Which will enforce installing it and therefore enable ``artifacts-keyring`` and 
 
 This can be controlled using the ``azure_devops_artifacts_helpers`` config option, which can be set to ``True`` or ``False`` (defaults to ``True``),
 to select whether or not it is used in that environment, or the ``--disable-azure-devops-artifacts-helpers`` command line option can be used to stop installation when invoking tox.
+
+
+Alternatively for other python environment managers (:pypi:`poetry`, :pypi:`hatch` etc.), the ``VIRTUALENV_SEEDER=azdo-pip``
+environment variable can be set to use this seeder in the virtual environment creation step.
