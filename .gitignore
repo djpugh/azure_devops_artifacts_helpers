@@ -32,3 +32,5 @@ Pipfile
 Pipfile.lock
 requirements-*.txt
 requirements.txt
+# Ignore verison file for scm usage
+src/azure_devops_artifacts_helpers/_version.py

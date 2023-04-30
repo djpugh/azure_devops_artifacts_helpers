@@ -48,6 +48,9 @@ venv = "azure_devops_artifacts_helpers.plugins.tox"
 tox = [
     "tox"
     ]
+dev = [
+    "setuptools_scm[toml]"
+]
 dev-lint = [
     "flake8>=5.0.4",
     "flake8-import-order>=0.18.2",
@@ -105,8 +108,9 @@ where = ["src"]
 
 [tool.setuptools_scm]
 write_to ="src/azure_devops_artifacts_helpers/_version.py"
-write_to_template = '__version__ = "{version}"\n'
+write_to_template = '__version__ = "{version}"'
 local_scheme = "node-and-date"
+version_scheme = "no-guess-dev"
 
 [tool.mypy]
 python_version = "3.11"
