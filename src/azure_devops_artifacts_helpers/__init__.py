@@ -2,9 +2,9 @@
 __version__ = "0.0.0"  # Default blank Version
 try:
     # Look here for setuptools scm to update the version - for development environments only
-    from setuptools_scm import get_version, LookupError
+    from setuptools_scm import get_version
     try:
-        __version__ = get_version(root='../../../', version_scheme='no-guess-dev', relative_to='__file__')
+        __version__ = get_version(root='../../', version_scheme='no-guess-dev', relative_to=__file__)
     except LookupError:
         pass
 except ImportError:
