@@ -16,7 +16,7 @@ def get_version() -> str:
     # try loading from file
     if version == '0+unknown':
         try:
-            from azure_devops_artifacts_helpers._version import __version__  # type: ignore # noqa: F401
+            from azure_devops_artifacts_helpers._version import __version__  # noqa: F401
         except ImportError:
             pass
     # Development installation without setuptools_scm
