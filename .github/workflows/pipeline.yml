@@ -30,7 +30,7 @@ jobs:
       uses: tj-actions/changed-files@v35
       with:
         files: |
-            *.{toml,ini,.gitignore}
+            *.{toml,ini}
             tools/**
     - name: Get changed files in the docs folder
       id: docs-changed
