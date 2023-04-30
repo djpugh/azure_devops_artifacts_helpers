@@ -13,7 +13,7 @@ else:
     import tomli as toml
 
 
-WHEELS_DIR = Path(__file__).parent.absolute()/'src'/'azure_devops_artifacts_helpers'/'wheels'
+WHEELS_DIR = Path(__file__).parent.parent.absolute()/'src'/'azure_devops_artifacts_helpers'/'wheels'
 
 DOWNLOAD_INDEX_URL = os.environ.get('PIP_INDEX_URL', "https://pypi.org/simple")
 
