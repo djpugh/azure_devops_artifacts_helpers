@@ -16,6 +16,8 @@ jobs:
     name: Changed Files
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
     - name: Get changed files in the src folder
       id: src-changed
       uses: tj-actions/changed-files@v35
