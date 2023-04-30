@@ -105,7 +105,7 @@ where = ["src"]
 
 [tool.setuptools_scm]
 write_to ="src/azure_devops_artifacts_helpers/_version.py"
-write_to_template = '__version__ = "{version}"'
+write_to_template = '__version__ = "{version}"\n'
 local_scheme = "node-and-date"
 
 [tool.mypy]
