@@ -2,21 +2,22 @@ import argparse
 import os
 import subprocess
 import sys
+from typing import List
 
 print(sys.version_info, sys.executable)
 
 
-def run(env_name, extra, input_file, opts):
+def run(env_name: str, extra: List[str], input_file:str, opts: List[str]) -> None:
     if opts:
         subprocess.check_call([sys.executable, '-I', '-m', 'pip', 'install']+opts)
     else:
         _prep()
         _install(_compile(env_name, extra, input_file), opts)
 
-def _prep():
+def _prep() -> None:
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'pip-tools'])
 
-def _compile(env_name, extras, input_file):
+def _compile(env_name: str, extras: List[str], input_file: str) -> str:
     output_file = f'requirements-{env_name}.txt'
     args = [sys.executable, '-m', 'piptools', 'compile', input_file, '-o', output_file, '--resolver=backtracking']
     if extras:
@@ -25,7 +26,7 @@ def _compile(env_name, extras, input_file):
     subprocess.check_call(args)
     return output_file
 
-def _install(requirements_file, opts):
+def _install(requirements_file: str, opts: List[str]) -> None:
     print(f'Installing from compiled {requirements_file}')
     with open(requirements_file) as f:
         reqs = f.read()
