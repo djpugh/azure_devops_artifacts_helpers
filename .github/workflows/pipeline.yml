@@ -147,7 +147,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   license-scan:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) ) || github.event_name == 'release'
+    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
 
     name: Scan Licenses
     runs-on: ubuntu-latest
