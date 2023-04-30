@@ -7,7 +7,7 @@ from typing import List
 import click
 from pkg_resources import resource_filename
 
-from azure_devops_artifacts_helpers._version import __version__
+from azure_devops_artifacts_helpers import __version__
 
 
 EXT_DIR = Path(resource_filename('azure_devops_artifacts_helpers.wheels', ''))

@@ -31,7 +31,7 @@ classifiers = [
 ]
 dependencies = [
     "virtualenv>=20.14.1",
-    "click>=7.1.2"
+    "click>=7.1.2",
 ]
 dynamic = ["version"]
 
@@ -49,7 +49,8 @@ tox = [
     "tox"
     ]
 dev = [
-    "setuptools_scm[toml]"
+    "setuptools_scm[toml]",
+    "importlib_metadata; python<3.8"
 ]
 dev-lint = [
     "flake8>=5.0.4",
