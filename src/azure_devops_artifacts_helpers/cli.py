@@ -2,11 +2,12 @@
 from pathlib import Path
 import subprocess
 import sys
+from typing import List
 
 import click
 from pkg_resources import resource_filename
 
-from azure_devops_artifacts_helpers import __version__
+from azure_devops_artifacts_helpers._version import __version__
 
 
 EXT_DIR = Path(resource_filename('azure_devops_artifacts_helpers.wheels', ''))
@@ -14,15 +15,15 @@ EXT_DIR = Path(resource_filename('azure_devops_artifacts_helpers.wheels', ''))
 
 @click.group('Azure devops artifacts helpers commands')
 @click.version_option(version=__version__)
-def main():
+def main() -> None:
     """Azure devops artifacts helpers commands."""
     pass
 
 
-@main.command(context_settings=dict(ignore_unknown_options=True))
+@main.command(context_settings={'ignore_unknown_options': True})
 @click.argument('pip_args', nargs=-1, type=click.UNPROCESSED)
 @click.option('--python', default=sys.executable)
-def install(python, pip_args):
+def install(python: str, pip_args: List[str]) -> None:
     """Azure devops artifacts install artfacts keyring."""
     for pkg in EXT_DIR.glob('artifacts_keyring*.whl'):
         # Install it and use the source dir
@@ -32,10 +33,10 @@ def install(python, pip_args):
         return
 
 
-@main.command(context_settings=dict(ignore_unknown_options=True))
+@main.command(context_settings={'ignore_unknown_options': True})
 @click.argument('pip_args', nargs=-1, type=click.UNPROCESSED)
 @click.option('--python', default=sys.executable)
-def uninstall(python, pip_args):
+def uninstall(python: str, pip_args: List[str]) -> None:
     """Azure devops artifacts uninstall artfacts keyring."""
     # Uninstall it and use the source dir
     for pkg in EXT_DIR.glob('artifacts_keyring*.whl'):

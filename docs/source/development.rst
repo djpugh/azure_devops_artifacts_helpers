@@ -40,7 +40,7 @@ The easiest way to do this is to generate the development tox environment, and t
 
 .. code-block:: console
 
-    tox -e dev
+    tox -e develop
     .venv/Scripts/virtualenv  # on Windows
 
 

@@ -3,8 +3,5 @@
         "config:base",
         ":preserveSemverRanges"
     ],
-    "labels": ["chore"],
-    "pip_requirements": {
-        "fileMatch": ["embed_requirements.txt", "requirements.txt"]
-      }
+    "labels": ["chore"]
 }

@@ -5,8 +5,8 @@ from typing import Any
 from azure_devops_artifacts_helpers.seed import EXT_DIR
 
 try:
-    import tox
-except (ImportError, ModuleNotFoundError):  # pragma: no cover
+    import tox  # type: ignore
+except ImportError:  # pragma: no cover
     tox = False
 
 if tox:
@@ -17,25 +17,27 @@ if tox:
         tox_v4 = False  # Version 3
 
     if tox_v4:
-        from tox.plugin import impl
-        from tox.tox_env.api import ToxEnv
+        from tox.plugin import impl  # type: ignore
+        from tox.tox_env.api import ToxEnv  # type: ignore
 
-        def tox_testenv_create(venv, action):
+        def tox_testenv_create(venv: Any, action: str) -> None:  # noqa: U100
             """Empty method if tox v4 installed."""
 
-        @impl
+        @impl  # type: ignore
         def tox_on_install(tox_env: ToxEnv, arguments: Any, section: str, of_type: str) -> None:  # noqa: U100
             """Called before executing an installation command to install artifacts keyring."""
             # To force install from the bundled wheels, we use the following pip flags:
             #    -f EXT_DIR --no-index
             # This makes pip look in the bundled wheel dir, and not use the index
             tox_env.installer._execute_installer(['artifacts-keyring', '-f', EXT_DIR, '--no-index'], 'pre_deps')
+            # We use this instead of wrapping the runner for now, but we could change this to support other plugin approaches using
+            # an env var context manager and a default venv runner instead
 
     else:
-        from tox.venv import cleanup_for_venv, _SKIP_VENV_CREATION, reporter
+        from tox.venv import cleanup_for_venv, _SKIP_VENV_CREATION, reporter, VirtualEnv  # type: ignore
 
-        @tox.hookimpl
-        def tox_testenv_create(venv, action):
+        @tox.hookimpl  # type: ignore
+        def tox_testenv_create(venv: VirtualEnv, action: str) -> bool:
             """Hook for creating tox testenv, monkeypatched from tox."""
             config_interpreter = venv.getsupportedinterpreter()
             args = [sys.executable, "-m", "virtualenv"]
@@ -70,12 +72,12 @@ if tox:
             # Return non-None to indicate plugin has completed
             return True
 
-        def tox_on_install(venv, action):
+        def tox_on_install(venv: Any, action: str) -> None:  # noqa: U100
             """Empty method if tox v3 installed."""
 
 else:  # pragma: no cover
-    def tox_testenv_create(venv, action):
+    def tox_testenv_create(venv: Any, action: str) -> None:  # noqa: U100
         """Empty method if tox not installed."""
 
-    def tox_on_install(venv, action):
+    def tox_on_install(venv: Any, action: str) -> None:  # noqa: U100
         """Empty method if tox not installed."""

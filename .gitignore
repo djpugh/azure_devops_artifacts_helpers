@@ -30,3 +30,5 @@ src/azure_devops_artifacts_helpers/wheels/*.whl
 Pipfile
 .coverage*
 Pipfile.lock
+requirements-*.txt
+requirements.txt

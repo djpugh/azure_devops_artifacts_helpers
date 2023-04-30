@@ -1,3 +1,2 @@
 """Package containing virtualenv helpers for installing artifacts-keyring."""
-from . import _version
-__version__ = _version.get_versions()['version']
+from azure_devops_artifacts_helpers._version import __version__  # noqa: F401
