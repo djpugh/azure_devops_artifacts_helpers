@@ -23,7 +23,7 @@ def get_version():
     if version == '0+unknown':
         # Use the metadata
         import sys
-        if sys.version_info.major >= 3 and sys.version_info.minor >=8:
+        if sys.version_info.major >= 3 and sys.version_info.minor >= 8:
             from importlib.metadata import version, PackageNotFoundError
         else:
             from importlib_metadata import version, PackageNotFoundError

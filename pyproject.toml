@@ -167,7 +167,10 @@ exclude = [
     "examples",
     "tests",
     ".venv/*",
-    ".tox/*"
+    ".tox/*",
+    "src/azure_devops_artifacts_helpers/_version.py",
+    ".venv*/*"
+
 ]
 show_source = true
 statistics = true
