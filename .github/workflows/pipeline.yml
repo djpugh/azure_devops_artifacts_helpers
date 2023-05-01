@@ -16,6 +16,16 @@ concurrency:
 
 jobs:
 
+  concurrency:
+    name: Show Concurrency Group
+    runs-on: ubuntu-latest
+    steps:
+      - name: Concurrency Group
+        run: |
+          echo "$CONCURRENCY_GROUP"
+        env:
+          CONCURRENCY_GROUP: ${{ github.workflow }}-(${{ github.head_ref}} || ${{ github.ref }})
+
   changes:
     name: Get Changed Files
     runs-on: ubuntu-latest
