@@ -11,7 +11,9 @@ on:
   release:
     types: [published]
 concurrency:
-  group: ${{ github.workflow }}-(${{ github.head_ref}} || ${{ github.ref }})
+  # PR builds seem to trigger after push builds, so this concurreny group
+  # should work to cancel push builds as well
+  group: ${{ github.workflow }}-${{ github.ref}}
   cancel-in-progress: true
 
 jobs:
