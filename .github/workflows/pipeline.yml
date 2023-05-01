@@ -200,6 +200,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=djpugh_azure_devops_artifacts_helpers
+            -Dsonar.organization=djpugh
+            -Dsonar.coverage.exclusions=**/*.*
+          # No coverage as handled separately
 
   license-scan:
     name: Scan Licenses
