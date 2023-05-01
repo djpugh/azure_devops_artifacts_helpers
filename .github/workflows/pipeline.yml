@@ -120,6 +120,14 @@ jobs:
   test:
     name: Test Python ${{ matrix.py }} - ${{ matrix.os }} - ${{matrix.tox_version}}
     runs-on: ${{ matrix.os }}-latest
+    needs:
+      - changes
+    if: >
+      (needs.changes.outputs.src || needs.changes.outputs.tests || needs.changes.outputs.config || needs.changes.outputs.workflows) ||
+      (github.event_name == 'pull_request' ) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
+
     strategy:
       fail-fast: false
       matrix:
