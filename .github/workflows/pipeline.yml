@@ -244,9 +244,15 @@ jobs:
       uses: github/codeql-action/analyze@v2
 
   collate-packages:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Collate Wheels - ${{ matrix.os }} - Python ${{ matrix.py }}
     runs-on: ${{ matrix.os }}-latest
+    needs:
+      - changes
+    if: >
+      (needs.changes.outputs.config == 'true' || needs.changes.outputs.workflows == 'true') ||
+      (github.event_name == 'pull_request' && contains(github.base_ref, 'main')) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
     strategy:
       fail-fast: false
       matrix:
