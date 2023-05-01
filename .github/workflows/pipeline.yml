@@ -10,11 +10,103 @@ on:
   pull_request:
   release:
     types: [published]
+concurrency:
+  group: ${{ github.workflow }}-(${{ github.head_ref}} || ${{ github.ref }})
+  cancel-in-progress: true
 
 jobs:
+
+  changes:
+    name: Get Changed Files
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Get changed files in the src folder
+      id: src-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: src/**
+    - name: List src changes
+      if: steps.src-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more files in the src folder has changed."
+        echo "List all the files that have changed: ${{ steps.src-changed.outputs.all_changed_files }}"
+    - name: Get changed files in the tests folder
+      id: tests-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: tests/**
+    - name: List tests changes
+      if: steps.tests-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more files in the tests folder has changed."
+        echo "List all the files that have changed: ${{ steps.tests-changed.outputs.all_changed_files }}"
+
+    - name: Get changed files in the root folder
+      id: root-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: |
+            *.{toml,ini}
+            tools/**
+    - name: List root changes
+      if: steps.root-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more config files in the root folder has changed."
+        echo "List all the files that have changed: ${{ steps.root-changed.outputs.all_changed_files }}"
+
+    - name: Get changed files in the docs folder
+      id: docs-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: docs/**
+    - name: List docs changes
+      if: steps.docs-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more files in the docs folder has changed."
+        echo "List all the files that have changed: ${{ steps.docs-changed.outputs.all_changed_files }}"
+
+    - name: Get changed files in the workflows folder
+      id: workflows-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: .github/workflows/**
+    - name: List workflows changes
+      if: steps.workflows-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more files in the .github/workflows folder has changed."
+        echo "List all the files that have changed: ${{ steps.workflows-changed.outputs.all_changed_files }}"
+
+    - name: Get changed files in the .github folder
+      id: tools-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: .github/*.{json,properties}
+    - name: List tools changes
+      if: steps.tools-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more tool configurations in the .github folder has changed."
+        echo "List all the files that have changed: ${{ steps.tools-changed.outputs.all_changed_files }}"
+
+    outputs:
+      src: ${{ steps.src-changed.outputs.any_changed == 'true'}}
+      tests: ${{ steps.tests-changed.outputs.any_changed  == 'true'}}
+      config: ${{ steps.root-changed.outputs.any_changed  == 'true'}}
+      tools: ${{ steps.tools-changed.outputs.any_changed  == 'true'}}
+      workflows: ${{ steps.workflows-changed.outputs.any_changed  == 'true'}}
+
   lint:
     name: Lint
     runs-on: windows-latest
+    needs:
+      - changes
+    if: >
+      (needs.changes.outputs.src || needs.changes.outputs.tools || needs.changes.outputs.config) ||
+      (github.event_name == 'pull_request' ) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
+
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
@@ -31,6 +123,14 @@ jobs:
   test:
     name: Test Python ${{ matrix.py }} - ${{ matrix.os }} - ${{matrix.tox_version}}
     runs-on: ${{ matrix.os }}-latest
+    needs:
+      - changes
+    if: >
+      (needs.changes.outputs.src || needs.changes.outputs.tests || needs.changes.outputs.config || needs.changes.outputs.workflows) ||
+      (github.event_name == 'pull_request' ) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
+
     strategy:
       fail-fast: false
       matrix:
@@ -83,6 +183,14 @@ jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
+    needs:
+      - changes
+    if: >
+      (needs.changes.outputs.src || needs.changes.outputs.config || needs.changes.outputs.workflows) ||
+      (github.event_name == 'pull_request' ) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
+
     steps:
       - uses: actions/checkout@v3
         with:
@@ -100,10 +208,15 @@ jobs:
           # No coverage as handled separately
 
   license-scan:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
-
     name: Scan Licenses
     runs-on: ubuntu-latest
+    needs:
+      - changes
+    if: >
+      (needs.changes.outputs.config || needs.changes.outputs.workflows) ||
+      (github.event_name == 'pull_request' && contains(github.base_ref, 'main')) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
 
     steps:
       - name: Checkout code
@@ -118,6 +231,14 @@ jobs:
   codeql-analyze:
     name: CodeQL Analyze
     runs-on: ubuntu-latest
+    needs:
+      - changes
+    if: >
+      (needs.changes.outputs.src || needs.changes.outputs.config || needs.changes.outputs.workflows) ||
+      (github.event_name == 'pull_request' ) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -132,9 +253,15 @@ jobs:
       uses: github/codeql-action/analyze@v2
 
   collate-packages:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Collate Wheels - ${{ matrix.os }} - Python ${{ matrix.py }}
     runs-on: ${{ matrix.os }}-latest
+    needs:
+      - changes
+    if: >
+      (needs.changes.outputs.config == 'true' || needs.changes.outputs.workflows == 'true') ||
+      (github.event_name == 'pull_request' && contains(github.base_ref, 'main')) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
     strategy:
       fail-fast: false
       matrix:
@@ -171,11 +298,16 @@ jobs:
           ./wheels/*
 
   build:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Build Package
     runs-on: ${{ matrix.os }}-latest
     needs:
       - collate-packages
+      - changes
+    if: >
+      (needs.changes.outputs.src || needs.changes.outputs.config || needs.changes.outputs.workflows) ||
+      (github.event_name == 'pull_request' && contains(github.base_ref, 'main')) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
     strategy:
       fail-fast: false
       matrix:
@@ -213,10 +345,15 @@ jobs:
             dist/*
 
   docs:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Build docs
     needs:
       - collate-packages
+      - changes
+    if: >
+      (needs.changes.outputs.src || needs.changes.outputs.config || needs.changes.outputs.docs || needs.changes.outputs.workflows) ||
+      (github.event_name == 'pull_request' && contains(github.base_ref, 'main')) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -249,11 +386,14 @@ jobs:
             !docs/html/.doctrees/*
 
   test-build:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Test Build Python ${{ matrix.py }} - ${{ matrix.os }} - ${{ matrix.tox_version }}
     needs:
       - build
       - test
+    if: >
+      (github.event_name == 'pull_request' && contains(github.base_ref, 'main')) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
     runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: false
@@ -294,7 +434,6 @@ jobs:
         run: pytest ./repo/tests/functional
 
   publish-package:
-    if: (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Publish Package
     runs-on: ubuntu-latest
     needs:
@@ -305,6 +444,9 @@ jobs:
       - license-scan
       - codeql-analyze
       - test-build
+    if: >
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) ||
+      github.event_name == 'release'
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.py }}
@@ -328,13 +470,16 @@ jobs:
         if: startsWith(github.ref, 'refs/tags')
 
   publish-docs:
-    # Only do this on the tagged build, not the release
-    if: (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')  && !(contains(github.ref, 'gh-pages') || contains(github.ref, 'docs')) )
     name: Publish Docs
     runs-on: ubuntu-latest
     needs:
       - docs
       - publish-package
+    # Only do this on the tagged build, not the release
+    if: >
+      (github.event_name == 'push' &&
+        startsWith(github.ref, 'refs/tags')  && !(contains(github.ref, 'gh-pages') || contains(github.ref, 'docs'))
+      )
     steps:
       - name: Download docs
         uses: actions/download-artifact@v3
