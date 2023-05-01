@@ -196,7 +196,7 @@ jobs:
     - shell: bash
       run: |
         mkdir wheels
-        cp artifacts/*/*.whl wheels/
+        cp -u artifacts/*/*.whl wheels/
         ls -l wheels/
     - name: Store collated wheels
       uses: actions/upload-artifact@v3
