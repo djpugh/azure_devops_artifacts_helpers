@@ -7,23 +7,35 @@ from typing import List
 print(sys.version_info, sys.executable)
 
 
-def run(env_name: str, extra: List[str], input_file:str, opts: List[str]) -> None:
-    if opts:
-        subprocess.check_call([sys.executable, '-I', '-m', 'pip', 'install']+opts)
-    else:
-        _prep()
-        _install(_compile(env_name, extra, input_file), opts)
+def run(deps: List[str], env_name: str, input_file:str, opts: List[str]) -> None:
+    _prep()
+    _install(_compile(deps, env_name, input_file), opts)
 
 def _prep() -> None:
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'pip-tools'])
+    if sys.version_info.minor < 11 and sys.version_info.major >= 3:
+        print('Installing tomli')
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'tomli'])
 
-def _compile(env_name: str, extras: List[str], input_file: str) -> str:
+def _compile(deps: List[str], env_name: str, input_file: str) -> str:
+
+    if sys.version_info.minor >= 11 and sys.version_info.major >= 3:
+        import tomllib as toml
+    else:
+        import tomli as toml  # type: ignore
     output_file = f'requirements-{env_name}.txt'
-    args = [sys.executable, '-m', 'piptools', 'compile', input_file, '-o', output_file, '--resolver=backtracking']
-    if extras:
-        for extra in extras:
-            args += ['--extra', extra]
-    subprocess.check_call(args)
+    with open(input_file) as f:
+        config = toml.loads(f.read())
+    packages = []
+    for dependency in deps:
+        if dependency.startswith('.'):
+            # extra
+            extra = dependency.split('[', 1)[-1].split(']', 1)[0]
+            packages += config['project']['optional-dependencies'][extra]
+            print(f'Adding dependencies for {extra}')
+        else:
+            packages.append(dependency)
+    with open(output_file, 'w') as f:
+        f.write('\n'.join(packages))
     return output_file
 
 def _install(requirements_file: str, opts: List[str]) -> None:
@@ -40,9 +52,9 @@ def _install(requirements_file: str, opts: List[str]) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--env-name')
-    parser.add_argument('--extras', default=None, nargs='*')
+    parser.add_argument('deps', default=None, nargs='*')
     parser.add_argument('--input-file', default='pyproject.toml')
     args, opts = parser.parse_known_args()
     print (args, opts)
     # Pass un expected args to the install step
-    run(args.env_name, args.extras, args.input_file, opts)
+    run(args.deps, args.env_name, args.input_file, opts)
