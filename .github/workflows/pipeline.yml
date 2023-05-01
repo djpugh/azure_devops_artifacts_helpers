@@ -12,6 +12,87 @@ on:
     types: [published]
 
 jobs:
+
+  changes:
+    name: Get Changed Files
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Get changed files in the src folder
+      id: src-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: src/**
+    - name: List src changes
+      if: steps.src-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more files in the src folder has changed."
+        echo "List all the files that have changed: ${{ steps.src-changed.outputs.all_changed_files }}"
+    - name: Get changed files in the tests folder
+      id: tests-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: tests/**
+    - name: List tests changes
+      if: steps.tests-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more files in the tests folder has changed."
+        echo "List all the files that have changed: ${{ steps.tests-changed.outputs.all_changed_files }}"
+
+    - name: Get changed files in the root folder
+      id: root-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: |
+            *.{toml,ini}
+            tools/**
+    - name: List root changes
+      if: steps.root-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more config files in the root folder has changed."
+        echo "List all the files that have changed: ${{ steps.root-changed.outputs.all_changed_files }}"
+
+    - name: Get changed files in the docs folder
+      id: docs-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: docs/**
+    - name: List docs changes
+      if: steps.docs-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more files in the docs folder has changed."
+        echo "List all the files that have changed: ${{ steps.docs-changed.outputs.all_changed_files }}"
+
+    - name: Get changed files in the workflows folder
+      id: workflows-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: .github/workflows/**
+    - name: List workflows changes
+      if: steps.workflows-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more files in the .github/workflows folder has changed."
+        echo "List all the files that have changed: ${{ steps.workflows-changed.outputs.all_changed_files }}"
+
+    - name: Get changed files in the .github folder
+      id: tools-changed
+      uses: tj-actions/changed-files@v35
+      with:
+        files: .github/*.{json,properties}
+    - name: List tools changes
+      if: steps.tools-changed.outputs.any_changed == 'true'
+      run: |
+        echo "One or more tool configurations in the .github folder has changed."
+        echo "List all the files that have changed: ${{ steps.tools-changed.outputs.all_changed_files }}"
+
+    outputs:
+      src: ${{ steps.src-changed.outputs.any_changed == 'true'}}
+      tests: ${{ steps.tests-changed.outputs.any_changed  == 'true'}}
+      config: ${{ steps.root-changed.outputs.any_changed  == 'true'}}
+      tools: ${{ steps.tools-changed.outputs.any_changed  == 'true'}}
+      workflows: ${{ steps.workflows-changed.outputs.any_changed  == 'true'}}
+
   lint:
     name: Lint
     runs-on: windows-latest
