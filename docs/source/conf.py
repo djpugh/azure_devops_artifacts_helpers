@@ -16,9 +16,14 @@ import datetime as dt
 import os
 from pathlib import Path
 import subprocess
+import sys
 
 from pkg_resources import parse_requirements
 import sphinx_material
+if sys.version_info.minor >= 11 and sys.version_info.major >= 3:
+    import tomllib as toml
+else:
+    import tomli as toml  # type: ignore
 
 from azure_devops_artifacts_helpers import __version__
 __author__ = 'David Pugh'
@@ -49,9 +54,10 @@ extensions = [
     'sphinx_material'
 ]
 
-with open(str(Path(__file__).parents[2]/'embed_requirements.txt')) as f:
-  artifacts_keyring_version = [f'``{u}``' for u in parse_requirements(f.read()) if 'artifacts' in u.name and 'keyring' in u.name][0]
-
+with open(str(Path(__file__).parents[2]/'pyproject.toml')) as f:
+    pyproject_toml = toml.loads(f.read())
+packages = pyproject_toml['project']['optional-dependencies']['vendored']
+artifacts_keyring_version = [f'``{u}``' for u in parse_requirements('\n'.join(packages)) if 'artifacts' in u.name and 'keyring' in u.name][0]
 # virtualenv_cli = subprocess.check_call(['virtualenv', '--help'])
 
 extlinks = {
