@@ -96,6 +96,14 @@ jobs:
   lint:
     name: Lint
     runs-on: windows-latest
+    needs:
+      - changes
+    if: >
+      (needs.changes.outputs.src || needs.changes.outputs.tools || needs.changes.outputs.config) ||
+      (github.event_name == 'pull_request' ) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
+
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
