@@ -200,6 +200,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=djpugh_azure_devops_artifacts_helpers
+            -Dsonar.organization=djpugh
+            -Dsonar.coverage.exclusions=**/*.*
+          # No coverage as handled separately
 
   license-scan:
     name: Scan Licenses
@@ -215,6 +221,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: compile requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-tools pipenv
+          pip-compile -o requirements.txt --extra tox
+          cat requirements.txt
 
       - name: Run FOSSA scan and upload build data
         uses: fossa-contrib/fossa-action@v2
