@@ -19,13 +19,12 @@ WHEELS_DIR = Path(__file__).parent.parent.absolute()/'src'/'azure_devops_artifac
 DOWNLOAD_INDEX_URL = os.environ.get('PIP_INDEX_URL', "https://pypi.org/simple")
 
 
-
-
 @click.command()
 @click.option('--index-url', default=DOWNLOAD_INDEX_URL, help='Index URL to use')
 @click.option('--py', 'python_versions', default=None, multiple=True, help='Python versions to populate, defaults to values set in pyproject.toml', type=str)
+@click.option('--platform', 'platforms', default=None, multiple=True, help='Platforms to populate, defaults to all platforms', type=str)
 @click.option('--target-dir', default=str(WHEELS_DIR), help='Target directory to output to')
-def populate_wheels(index_url: str = DOWNLOAD_INDEX_URL, python_versions: List[str] = [], target_dir: str = str(WHEELS_DIR)) -> None:
+def populate_wheels(index_url: str = DOWNLOAD_INDEX_URL, python_versions: List[str] = [], platforms: List[str] = [], target_dir: str = str(WHEELS_DIR)) -> None:
     # Load from toml section
     with open('pyproject.toml') as f:
         pyproject_toml = toml.loads(f.read())
@@ -47,17 +46,28 @@ def populate_wheels(index_url: str = DOWNLOAD_INDEX_URL, python_versions: List[s
             _v = Version(max_version.lstrip('<'))
             max_version = Version(f'{_v.major}.{_v.minor-1}')
         python_versions = [f'{min_version.major}.{minor}' for minor in range(min_version.minor, max_version.minor)]
-
-
+    if not platforms:
+        platforms = ['win32', 'darwin', 'linux']
+    processed_platforms = []
+    for plat in platforms:
+        if 'ubuntu' in plat:
+            plat = 'linux'
+        elif 'windows' in plat:
+            plat = 'win32'
+        elif 'macos' in plat:
+            plat = 'darwin'
+        processed_platforms.append(plat)
     for py_version in python_versions:
-        print(f'PLATFORM: {sys.platform} - PYTHON VERSION: {py_version}')
-        args = [sys.executable, '-m', 'pip', 'download',
-                '--only-binary=:all:',
-                f'--python-version={py_version}',
-                '-d', target_dir,
-                '--index-url', index_url] + packages
-        print(' '.join(args))
-        print(subprocess.check_output(args).decode())
+        for platform in processed_platforms:
+            print(f'PLATFORM: {platform} - PYTHON VERSION: {py_version}')
+            args = [sys.executable, '-m', 'pip', 'download',
+                    '--only-binary=:all:',
+                    f'--platform={platform}',
+                    f'--python-version={py_version}',
+                    '-d', target_dir,
+                    '--index-url', index_url] + packages
+            print(' '.join(args))
+            print(subprocess.check_output(args).decode())
     print('Downloaded Packages to '+target_dir)
     print('\t- '+'\n\t- '.join([u for u in os.listdir(target_dir) if u.endswith('whl')] ))
 
