@@ -130,11 +130,44 @@ jobs:
       - name: Lint
         run: tox -e lint
 
+  collate-packages:
+    name: Collate Wheels
+    runs-on: windows-latest
+    needs:
+      - changes
+    if: >
+      (needs.changes.outputs.config == 'true' || needs.changes.outputs.workflows == 'true') ||
+      (github.event_name == 'pull_request' && contains(github.base_ref, 'main')) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install tox
+
+    - name: Populate platform wheels
+      run: tox -e populate -- --target-dir ./wheels
+
+    - name: Store collated wheels
+      uses: actions/upload-artifact@v3
+      with:
+        name: wheels
+        path: |
+          ./wheels/*
+
   test:
     name: Test Python ${{ matrix.py }} - ${{ matrix.os }} - ${{matrix.tox_version}}
     runs-on: ${{ matrix.os }}-latest
     needs:
       - changes
+      - collate-packages
     if: >
       (needs.changes.outputs.src || needs.changes.outputs.tests || needs.changes.outputs.config || needs.changes.outputs.workflows) ||
       (github.event_name == 'pull_request' ) ||
@@ -168,8 +201,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -U tox setuptools
-    - name: Populate platform wheels
-      run: tox -e populate -- --py ${{ matrix.py }} --platform ${{ matrix.os }}
+    - name: Download collated wheels
+      uses: actions/download-artifact@v3
+      with:
+        path: wheels
+    - shell: bash
+      run: cp -u wheels/*.whl src/azure_devops_artifacts_helpers/wheels/
     - name: Setup Test Suite
       run: tox -e test-${{ matrix.tox_version }} -vv --notest
     - name: Run Test Suite
@@ -273,38 +310,6 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
 
-  collate-packages:
-    name: Collate Wheels
-    runs-on: windows-latest
-    needs:
-      - changes
-    if: >
-      (needs.changes.outputs.config == 'true' || needs.changes.outputs.workflows == 'true') ||
-      (github.event_name == 'pull_request' && contains(github.base_ref, 'main')) ||
-      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
-      (github.event_name == 'release')
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.9
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install tox
-
-    - name: Populate platform wheels
-      run: tox -e populate -- --target-dir ./wheels
-
-    - name: Store collated wheels
-      uses: actions/upload-artifact@v3
-      with:
-        name: wheels
-        path: |
-          ./wheels/*
-
   build:
     name: Build Package
     runs-on: windows-latest
@@ -337,7 +342,7 @@ jobs:
           path: wheels
 
       - shell: bash
-        run: cp -u wheels/*/*.whl src/azure_devops_artifacts_helpers/wheels/
+        run: cp -u wheels/*.whl src/azure_devops_artifacts_helpers/wheels/
 
       - name: Build azure_devops_artifacts_helpers
         run: tox -e build -vvv
@@ -375,7 +380,7 @@ jobs:
           path: wheels
 
       - shell: bash
-        run: cp -u wheels/*/*.whl src/azure_devops_artifacts_helpers/wheels/
+        run: cp -u wheels/*.whl src/azure_devops_artifacts_helpers/wheels/
 
       - name: Build docs
         run: tox -e docs
