@@ -204,9 +204,10 @@ jobs:
     - name: Download collated wheels
       uses: actions/download-artifact@v3
       with:
-        path: wheels
-    - shell: bash
-      run: cp -u wheels/*.whl src/azure_devops_artifacts_helpers/wheels/
+        name: wheels
+        path: src/azure_devops_artifacts_helpers/wheels/
+    # - shell: bash
+    #   run: cp -u wheels/*.whl src/azure_devops_artifacts_helpers/wheels/
     - name: Setup Test Suite
       run: tox -e test-${{ matrix.tox_version }} -vv --notest
     - name: Run Test Suite
