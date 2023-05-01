@@ -83,6 +83,7 @@ dev-docs = [
     "sphinx_github_changelog"
 ]
 dev-populate = [
+    "packaging",
     "click"
 ]
 dev-build = [
@@ -122,6 +123,7 @@ overrides = [
   { module = [
     "virtualenv.*",
     "tox.*",
+    "importlib_metadata.*",
     "azure_devops_artifacts_helpers._version"
   ], ignore_missing_imports = true },
 ]
