@@ -83,6 +83,7 @@ dev-docs = [
     "sphinx_github_changelog"
 ]
 dev-populate = [
+    "packaging",
     "click"
 ]
 dev-build = [
