@@ -11,7 +11,7 @@ on:
   release:
     types: [published]
 concurrency:
-  group: ${{ github.workflow }}-(${{ github.head_ref}} || ${{ github.ref }})
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
         run: |
           echo "$CONCURRENCY_GROUP"
         env:
-          CONCURRENCY_GROUP: ${{ github.workflow }}-(${{ github.head_ref}} || ${{ github.ref }})
+          CONCURRENCY_GROUP: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
 
   changes:
     name: Get Changed Files
