@@ -92,6 +92,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=djpugh_azure_devops_artifacts_helpers
+            -Dsonar.organization=djpugh
+            -Dsonar.coverage.exclusions=**/*.*
+          # No coverage as handled separately
 
   license-scan:
     if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
