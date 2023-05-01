@@ -377,11 +377,14 @@ jobs:
             !docs/html/.doctrees/*
 
   test-build:
-    if: github.event_name == 'pull_request' && contains(github.base_ref, 'main') || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) || github.event_name == 'release'
     name: Test Build Python ${{ matrix.py }} - ${{ matrix.os }} - ${{ matrix.tox_version }}
     needs:
       - build
       - test
+    if: >
+      (github.event_name == 'pull_request' && contains(github.base_ref, 'main')) ||
+      (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
+      (github.event_name == 'release')
     runs-on: ${{ matrix.os }}-latest
     strategy:
       fail-fast: false
