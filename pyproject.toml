@@ -122,6 +122,7 @@ overrides = [
   { module = [
     "virtualenv.*",
     "tox.*",
+    "importlib_metadata.*",
     "azure_devops_artifacts_helpers._version"
   ], ignore_missing_imports = true },
 ]

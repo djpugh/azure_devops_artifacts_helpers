@@ -6,7 +6,7 @@ import sys
 from typing import List
 
 import click
-from packaging.version import Version
+from packaging.version import Version  # type: ignore
 
 if sys.version_info.minor >= 11 and sys.version_info.major >= 3:
     import tomllib as toml
