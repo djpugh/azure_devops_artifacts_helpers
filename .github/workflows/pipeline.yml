@@ -132,7 +132,7 @@ jobs:
 
   collate-packages:
     name: Collate Wheels
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os}}-latest
     needs:
       - changes
     if: >
@@ -140,25 +140,41 @@ jobs:
       (github.event_name == 'pull_request' && contains(github.base_ref, 'main')) ||
       (github.event_name == 'push' && (startsWith(github.ref, 'refs/tags') || contains(github.ref, 'main'))) ||
       (github.event_name == 'release')
+    strategy:
+      fail-fast: true
+      # needs to run as matricx due to https://github.com/pypa/pip/issues/11664
+      # dependencies aren't evaluated by the requested platform
+      matrix:
+        os:
+          - ubuntu
+          - windows
+          - macos
+        py:
+          - 3.7
+          - 3.8
+          - 3.9
+          - "3.10"
+          - 3.11
+
     steps:
     - uses: actions/checkout@v3
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.9
+        python-version: ${{ matrix.py }}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install tox
 
     - name: Populate platform wheels
-      run: tox -e populate -- --target-dir ./wheels
+      run: tox -e populate -- --target-dir ./wheels --py ${{matrix.py}}
 
     - name: Store collated wheels
       uses: actions/upload-artifact@v3
       with:
-        name: wheels
+        name: wheels-${{matrix.os}}-${{matrix.py}}
         path: |
           ./wheels/*
 
@@ -204,10 +220,11 @@ jobs:
     - name: Download collated wheels
       uses: actions/download-artifact@v3
       with:
-        name: wheels
-        path: src/azure_devops_artifacts_helpers/wheels/
-    # - shell: bash
-    #   run: cp -u wheels/*.whl src/azure_devops_artifacts_helpers/wheels/
+        path: wheels
+    - shell: bash
+      run: |
+        cp wheels/*/*.whl src/azure_devops_artifacts_helpers/wheels/
+        ls -l src/azure_devops_artifacts_helpers/wheels/
     - name: Setup Test Suite
       run: tox -e test-${{ matrix.tox_version }} -vv --notest
     - name: Run Test Suite
@@ -343,8 +360,9 @@ jobs:
           path: wheels
 
       - shell: bash
-        run: cp -u wheels/*.whl src/azure_devops_artifacts_helpers/wheels/
-
+        run: |
+          cp -u wheels/*/*.whl src/azure_devops_artifacts_helpers/wheels/
+          ls -l src/azure_devops_artifacts_helpers/wheels/
       - name: Build azure_devops_artifacts_helpers
         run: tox -e build -vvv
 
@@ -381,8 +399,9 @@ jobs:
           path: wheels
 
       - shell: bash
-        run: cp -u wheels/*.whl src/azure_devops_artifacts_helpers/wheels/
-
+        run: |
+          cp -u wheels/*/*.whl src/azure_devops_artifacts_helpers/wheels/
+          ls -l src/azure_devops_artifacts_helpers/wheels/
       - name: Build docs
         run: tox -e docs
         env:
