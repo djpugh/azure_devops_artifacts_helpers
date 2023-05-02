@@ -67,15 +67,9 @@ dev-lint = [
     "types-colorama",
     "types-setuptools"
 ]
-dev-test-v3 = [
+dev-test= [
     "pytest>=7.3.1",
     "pytest-cov>=4",
-    "tox<5.0.0"
-    ]
-dev-test-v4 = [
-    "pytest>=7.3.1",
-    "pytest-cov>=4",
-    "tox>=4.0.0"
     ]
 dev-docs = [
     "sphinx",
