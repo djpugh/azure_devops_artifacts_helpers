@@ -198,7 +198,7 @@ jobs:
         mkdir wheels
         cp -u artifacts/*/*.whl wheels/
         ls -l wheels/
-    - name: Store collated wheels
+    - name: Store aggregated wheels
       uses: actions/upload-artifact@v3
       with:
         name: wheels
@@ -245,7 +245,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -U tox setuptools
-    - name: Download collated wheels
+    - name: Download aggregated wheels
       uses: actions/download-artifact@v3
       with:
         name: wheels
@@ -379,7 +379,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox
 
-      - name: Download collated wheels
+      - name: Download aggregated wheels
         uses: actions/download-artifact@v3
         with:
           name: wheels
@@ -413,7 +413,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install tox
-      - name: Download collated wheels
+      - name: Download aggregated wheels
         uses: actions/download-artifact@v3
         with:
           name: wheels
