@@ -70,7 +70,7 @@ dev-lint = [
 dev-test-v3 = [
     "pytest>=7.3.1",
     "pytest-cov>=4",
-    "tox<4.0.0"
+    "tox<5.0.0"
     ]
 dev-test-v4 = [
     "pytest>=7.3.1",
