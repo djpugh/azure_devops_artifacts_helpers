@@ -52,6 +52,9 @@ To create a virtualenv with the ``artifacts-keyring`` package installed.
 This also includes an extension for ``tox``, which will activate automatically (may require configuring
 ``requires`` in the ``tox`` config)
 
+Alternatively for other python environment managers (``poetry``, ``hatch`` etc.), the ``VIRTUALENV_SEEDER=azdo-pip``
+environment variable can be set to use this seeder.
+
 Links
 ~~~~~
 
