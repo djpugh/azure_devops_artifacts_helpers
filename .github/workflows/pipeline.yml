@@ -32,6 +32,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
     - name: Get changed files in the src folder
       id: src-changed
       uses: tj-actions/changed-files@v35
@@ -409,6 +411,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.py }}
         uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -492,7 +496,7 @@ jobs:
       - codeql-analyze
       - test-build
     if: >
-      (github.event_name == 'push' && startsWith(github.ref, 'refs/tags')) ||
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/tags') && !contains(github.ref, 'dev-')) ||
       github.event_name == 'release'
     steps:
       - uses: actions/checkout@v3
@@ -525,7 +529,7 @@ jobs:
     # Only do this on the tagged build, not the release
     if: >
       (github.event_name == 'push' &&
-        startsWith(github.ref, 'refs/tags')  && !(contains(github.ref, 'gh-pages') || contains(github.ref, 'docs'))
+        startsWith(github.ref, 'refs/tags')  && !(contains(github.ref, 'gh-pages') || contains(github.ref, 'docs') || contains(github.ref, 'dev-'))
       )
     steps:
       - name: Download docs
