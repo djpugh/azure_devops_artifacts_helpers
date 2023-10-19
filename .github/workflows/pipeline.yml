@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
     - name: Get changed files in the src folder
@@ -120,7 +120,7 @@ jobs:
       (github.event_name == 'release')
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -159,7 +159,7 @@ jobs:
           - 3.11
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -238,7 +238,7 @@ jobs:
           - v4
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.py }}
       uses: actions/setup-python@v4
       with:
@@ -284,7 +284,7 @@ jobs:
       (github.event_name == 'release')
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: SonarCloud Scan
@@ -312,7 +312,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -344,7 +344,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -369,7 +369,7 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           clean: true
       - name: Set up Python ${{ matrix.py }}
@@ -408,7 +408,7 @@ jobs:
       (github.event_name == 'release')
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.py }}
         uses: actions/setup-python@v4
         with:
@@ -463,7 +463,7 @@ jobs:
           - "tox<4.0.0"
           - "tox>=4.0.0"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: ./repo
       - name: Set up Python ${{ matrix.py }}
@@ -499,7 +499,7 @@ jobs:
       (github.event_name == 'push' && startsWith(github.ref, 'refs/tags') && !contains(github.ref, 'dev-')) ||
       github.event_name == 'release'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.py }}
         uses: actions/setup-python@v4
       - name: Download build
