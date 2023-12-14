@@ -174,7 +174,7 @@ jobs:
       run: tox -e populate -- --target-dir ./wheels --py ${{matrix.py}}
 
     - name: Store collated wheels
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: wheels-${{matrix.os}}-${{matrix.py}}
         path: |
@@ -201,7 +201,7 @@ jobs:
         cp -u artifacts/*/*.whl wheels/
         ls -l wheels/
     - name: Store aggregated wheels
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: wheels
         path: |
@@ -390,7 +390,7 @@ jobs:
         run: tox -e build -vvv
 
       - name: Store build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build
           path: |
@@ -429,7 +429,7 @@ jobs:
           SPHINX_GITHUB_CHANGELOG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Store build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docs
           path: |
