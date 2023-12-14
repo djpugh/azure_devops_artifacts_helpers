@@ -192,7 +192,7 @@ jobs:
       (github.event_name == 'release')
     steps:
     - name: Download collated wheels
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: artifacts
     - shell: bash
@@ -248,7 +248,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -U tox setuptools
     - name: Download aggregated wheels
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: wheels
         path: src/azure_devops_artifacts_helpers/wheels/
@@ -382,7 +382,7 @@ jobs:
           pip install tox
 
       - name: Download aggregated wheels
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: wheels
           path: src/azure_devops_artifacts_helpers/wheels/
@@ -418,7 +418,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox
       - name: Download aggregated wheels
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: wheels
           path: src/azure_devops_artifacts_helpers/wheels/
@@ -471,7 +471,7 @@ jobs:
         with:
           python-version: ${{ matrix.py }}
       - name: Download build
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: dist
@@ -503,7 +503,7 @@ jobs:
       - name: Set up Python ${{ matrix.py }}
         uses: actions/setup-python@v4
       - name: Download build
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: build
           path: dist
@@ -533,7 +533,7 @@ jobs:
       )
     steps:
       - name: Download docs
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: docs
           path: ./docs/html
