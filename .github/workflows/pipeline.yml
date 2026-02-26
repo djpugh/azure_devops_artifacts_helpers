@@ -174,7 +174,7 @@ jobs:
       run: tox -e populate -- --target-dir ./wheels --py ${{matrix.py}}
 
     - name: Store collated wheels
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: wheels-${{matrix.os}}-${{matrix.py}}
         path: |
@@ -192,7 +192,7 @@ jobs:
       (github.event_name == 'release')
     steps:
     - name: Download collated wheels
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         path: artifacts
     - shell: bash
@@ -201,7 +201,7 @@ jobs:
         cp -u artifacts/*/*.whl wheels/
         ls -l wheels/
     - name: Store aggregated wheels
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: wheels
         path: |
@@ -248,7 +248,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -U tox setuptools
     - name: Download aggregated wheels
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: wheels
         path: src/azure_devops_artifacts_helpers/wheels/
@@ -382,7 +382,7 @@ jobs:
           pip install tox
 
       - name: Download aggregated wheels
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: wheels
           path: src/azure_devops_artifacts_helpers/wheels/
@@ -390,7 +390,7 @@ jobs:
         run: tox -e build -vvv
 
       - name: Store build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: build
           path: |
@@ -418,7 +418,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox
       - name: Download aggregated wheels
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: wheels
           path: src/azure_devops_artifacts_helpers/wheels/
@@ -429,7 +429,7 @@ jobs:
           SPHINX_GITHUB_CHANGELOG_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Store build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: docs
           path: |
@@ -471,7 +471,7 @@ jobs:
         with:
           python-version: ${{ matrix.py }}
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build
           path: dist
@@ -503,7 +503,7 @@ jobs:
       - name: Set up Python ${{ matrix.py }}
         uses: actions/setup-python@v5
       - name: Download build
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: build
           path: dist
@@ -533,7 +533,7 @@ jobs:
       )
     steps:
       - name: Download docs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: docs
           path: ./docs/html
